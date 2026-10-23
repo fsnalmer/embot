@@ -1,0 +1,11 @@
+{
+  "name": "heyem-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Dashboard web statique du bot HeyemBot (GitHub Pages)",
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "test": "node scripts/check.mjs && node test/e2e.mjs && node test/e2e-real-api.mjs"
+  }
+}

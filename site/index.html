@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' https://cdn.discordapp.com data:; connect-src https: http://localhost:* http://127.0.0.1:*; base-uri 'none'; form-action 'none'">
+  <meta name="color-scheme" content="dark">
+  <title>Dashboard HeyemBot</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="#/">Heyem<span>Bot</span></a>
+    <div id="user"></div>
+  </header>
+  <main id="app" aria-live="polite"><p class="muted">Chargement…</p></main>
+  <div id="toast" role="status"></div>
+  <noscript><p class="notice">Ce dashboard nécessite JavaScript.</p></noscript>
+  <script src="config.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
