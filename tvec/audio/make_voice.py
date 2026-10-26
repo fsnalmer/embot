@@ -1,6 +1,6 @@
 """Voix off EN calée sur la timeline + mixage avec ducking de la musique -> audio/tvec_soundtrack_vo.wav
 Moteurs (venv avec le paquet correspondant) :
-  Kokoro (par défaut, plus naturel) : python make_voice.py kokoro <dossier avec kokoro-v1.0.onnx + voices-v1.0.bin> [voix=af_heart]
+  Kokoro (par défaut, plus naturel) : python make_voice.py kokoro <dossier avec kokoro-v1.0.onnx + voices-v1.0.bin> [voix=af_heart | mélange: af_heart+am_michael]
   Piper                             : python make_voice.py piper <modele.onnx>"""
 import sys, wave, subprocess, numpy as np, os
 ENGINE=sys.argv[1]; MODEL=sys.argv[2]; VOICE=sys.argv[3] if len(sys.argv)>3 else 'af_heart'; sr=44100
@@ -38,7 +38,9 @@ for name,t0,text,ls in LINES:
         import soundfile as sf
         if 'KOK' not in globals():
             from kokoro_onnx import Kokoro; KOK=Kokoro(os.path.join(MODEL,'kokoro-v1.0.onnx'),os.path.join(MODEL,'voices-v1.0.bin'))
-        samples,rate=KOK.create(text,voice=VOICE,speed=1/ls*1.08,lang='en-us'); sf.write(f,samples,rate,subtype='PCM_16')
+        if 'VSTYLE' not in globals():  # 'af_heart+am_michael' = mélange 50/50 des deux styles
+            VSTYLE=np.mean([KOK.get_voice_style(n) for n in VOICE.split('+')],axis=0) if '+' in VOICE else VOICE
+        samples,rate=KOK.create(text,voice=VSTYLE,speed=1/ls*1.08,lang='en-us'); sf.write(f,samples,rate,subtype='PCM_16')
     a,r=read(f); a=resample(a,r)
     # trim silence
     idx=np.where(np.abs(a)>.01)[0]; a=a[idx[0]:idx[-1]+1] if len(idx) else a
