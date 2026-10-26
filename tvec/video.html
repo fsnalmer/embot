@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TVEC — Viral Ad 9:16</title>
+<meta name="viewport" content="width=1080">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+:root{--bg:#191c19;--v:#6b3fe6;--lil:#b99cff;--off:#f4f1ec;--gray:#a9aca7;--mint:#7ee8b4;}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;background:#000;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:var(--bg);font-family:'Manrope',sans-serif;color:var(--off)}
+#cam{position:absolute;inset:0;transform-origin:540px 960px}
+.scene{position:absolute;inset:0;display:none}
+.abs{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.t{position:absolute;left:60px;white-space:nowrap;line-height:1;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;letter-spacing:-0.035em;text-transform:uppercase;color:var(--off);transform-origin:0 50%;display:inline-block}
+.cw{position:absolute;left:0;width:1080px;display:flex;justify-content:center}
+.cw .t{position:relative;left:auto;transform-origin:50% 50%}
+.kick{position:absolute;left:60px;font-weight:700;font-size:30px;letter-spacing:.22em;text-transform:uppercase;color:var(--lil);white-space:nowrap}
+.sub{position:absolute;left:60px;font-weight:500;font-size:38px;color:var(--gray);white-space:nowrap}
+.hand{font-family:'Caveat Brush',cursive;color:var(--lil);white-space:nowrap;position:absolute;line-height:1.05}
+.hl{position:relative;display:inline-block;z-index:0;padding:0 .04em}
+.hl::before{content:'';position:absolute;z-index:-1;left:-.15em;right:-.1em;top:.02em;bottom:-.06em;background:var(--v);transform:scaleX(var(--p,1));transform-origin:0 50%;clip-path:polygon(0 12%,38% 3%,100% 0,99% 55%,100% 100%,52% 96%,0 100%,2% 50%)}
+.hl.b::before{clip-path:polygon(1% 0,60% 6%,100% 2%,98% 48%,100% 96%,40% 100%,0 94%,3% 44%)}
+.hl.c::before{clip-path:polygon(0 4%,55% 0,100% 9%,100% 90%,62% 100%,0 93%,3% 50%)}
+.rule{position:absolute;left:60px;width:960px;height:3px;background:var(--off)}
+svg.dr{position:absolute;overflow:visible}
+svg.dr path{fill:none;stroke:var(--lil);stroke-width:8;stroke-linecap:round;stroke-linejoin:round}
+.card{position:absolute;border:3px solid var(--off);border-radius:34px;background:var(--bg)}
+.pill{position:absolute;white-space:nowrap;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border-radius:999px}
+img{display:block}
+.shadow{filter:drop-shadow(0 26px 34px rgba(0,0,0,.65)) drop-shadow(0 4px 6px rgba(0,0,0,.5))}
+#grain{position:absolute;inset:-100px;background:url(assets/grain.png);opacity:.07;mix-blend-mode:overlay;pointer-events:none;z-index:50}
+#vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,transparent 55%,rgba(0,0,0,.55) 100%);pointer-events:none;z-index:49}
+#flash{position:absolute;inset:0;background:var(--v);opacity:0;z-index:60;pointer-events:none}
+#wipe{position:absolute;top:0;left:0;width:1080px;height:1920px;z-index:55;display:none}
+#wipe .m{position:absolute;inset:0;background:var(--v)}
+#wipe .l{position:absolute;background:var(--mint)}
+</style>
+</head>
+<body>
+<div id="stage">
+ <div id="cam">
+
+  <!-- glow de fond (parallaxe) -->
+  <div class="abs" id="glow" style="width:1400px;height:1400px;left:-160px;top:300px;background:radial-gradient(circle,rgba(107,63,230,.30),transparent 62%)"></div>
+
+  <!-- ============ SCÈNE 1 — HOOK ============ -->
+  <div class="scene" id="s1">
+   <div class="abs" id="strip" style="left:0;top:700px;width:1080px;height:420px;overflow:hidden">
+     <div id="stripRow" style="position:absolute;left:0;top:60px;height:300px;display:flex;gap:14px"></div>
+     <div id="ruler" style="position:absolute;left:0;top:0;width:3000px;height:44px;background:repeating-linear-gradient(90deg,var(--off) 0 3px,transparent 3px 30px);opacity:.55;-webkit-mask-image:linear-gradient(transparent 0,transparent 0)"></div>
+   </div>
+   <div id="playhead" class="abs" style="left:530px;top:660px;width:4px;height:500px;background:var(--v);box-shadow:0 0 30px var(--v)"><div style="position:absolute;left:-16px;top:-6px;width:36px;height:36px;background:var(--v);clip-path:polygon(0 0,100% 0,50% 100%)"></div></div>
+   <div class="kick" id="s1kick" style="top:380px">For video editors</div>
+   <div id="title1" class="abs" style="left:0;top:0;width:1080px;height:1920px">
+     <div class="t" data-fit="640" id="l1a" style="top:470px">Stop</div>
+     <div class="t" data-fit="940" id="l1b" style="top:735px">Editing</div>
+     <div class="t" data-fit="940" id="l1c" style="top:1010px">For <span class="hl" id="hlFree" style="--p:0">free.</span></div>
+   </div>
+   <div id="gl1" class="abs" style="inset:0;width:1080px;height:1920px;display:none"></div>
+   <div id="gl2" class="abs" style="inset:0;width:1080px;height:1920px;display:none"></div>
+   <div id="slices"></div>
+  </div>
+
+  <!-- header persistant (scènes 2→7) -->
+  <div id="hdr" class="abs" style="left:0;top:0;width:1080px;height:260px;display:none;z-index:5">
+    <img src="assets/logo_tvec.png" style="position:absolute;left:60px;top:128px;height:50px">
+    <div class="rule" style="top:196px"></div>
+  </div>
+
+  <!-- ============ SCÈNE 2 — RÉVÉLATION ============ -->
+  <div class="scene" id="s2">
+   <div class="kick" id="s2kick" style="top:232px">What is TVEC?</div>
+   <div class="t" data-fit="820" id="s2a" style="top:290px">Get paid</div>
+   <div class="t" data-fit="820" id="s2b" style="top:470px">to <span class="hl b" id="hl2" style="--p:0">edit.</span></div>
+   <div class="abs" id="grp2" style="left:92px;top:735px;width:895px;height:530px;transform-origin:50% 50%">
+     <img class="shadow abs" id="p2a" src="assets/g_sem.png" style="left:0;top:0">
+     <img class="shadow abs" id="p2b" src="assets/g_funk.png" style="left:295px;top:35px">
+     <img class="shadow abs" id="p2c" src="assets/g_baila.png" style="left:568px;top:0">
+   </div>
+   <div class="t" data-fit="760" id="s2c" style="top:1330px;font-size:90px">Real contests.</div>
+   <div class="t" data-fit="760" id="s2d" style="top:1430px"><span class="hl c" id="hl2b" style="--p:0">Real prizes.</span></div>
+  </div>
+
+  <!-- ============ SCÈNE 3 — L'ARGENT ============ -->
+  <div class="scene" id="s3">
+   <div class="kick" id="s3kick" style="top:232px">Real contests, real money</div>
+   <div class="cw" style="top:300px"><div class="t" id="big" data-fit="940" style="font-size:260px;text-shadow:12px 12px 0 var(--v)"></div></div>
+   <svg class="dr" id="ul3" style="left:80px;top:575px" width="900" height="40"><path id="ul3p" d="M4 22 C 200 8, 520 30, 892 12"/></svg>
+   <div class="t" data-fit="880" id="s3b" style="top:625px">in <span class="hl" id="hl3" style="--p:0">prize pools.</span></div>
+   <div class="sub" id="s3c" style="top:770px;font-size:34px;letter-spacing:.04em">7 contests so far — each on <b style="color:var(--off)">one song</b>.</div>
+   <div class="abs" id="grp3" style="left:137px;top:880px;width:895px;height:530px;transform-origin:0 0">
+     <img class="shadow abs" id="p3a" src="assets/g_sem.png" style="left:0;top:0">
+     <img class="shadow abs" id="p3b" src="assets/g_funk.png" style="left:295px;top:35px">
+     <img class="shadow abs" id="p3c" src="assets/g_baila.png" style="left:568px;top:0">
+   </div>
+  </div>
+
+  <!-- ============ SCÈNE 4 — COMMENT ÇA MARCHE ============ -->
+  <div class="scene" id="s4">
+   <div class="kick" id="s4kick" style="top:232px">How it works</div>
+   <div class="t" data-fit="470" id="s4a" style="top:278px">3 steps.</div>
+   <div class="t" data-fit="600" id="s4b" style="top:405px"><span class="hl c" id="hl4" style="--p:0">That's it.</span></div>
+
+   <!-- en-tête d'étape -->
+   <div id="stepHead" class="abs" style="left:0;top:590px;width:1080px;height:170px">
+     <div class="t" id="stN" style="left:60px;top:0;font-size:120px;color:var(--lil)">01</div>
+     <div class="t" id="stT" style="left:250px;top:6px;font-size:70px">Pick a contest</div>
+     <div class="sub" id="stS" style="left:252px;top:92px;font-size:34px">and download the sound in one tap.</div>
+   </div>
+   <div id="bars" style="position:absolute;left:60px;top:560px;width:960px;height:8px;display:flex;gap:12px">
+     <div style="flex:1;background:#34382f;border-radius:4px;overflow:hidden"><div id="bar1" style="height:100%;background:var(--v);width:0"></div></div>
+     <div style="flex:1;background:#34382f;border-radius:4px;overflow:hidden"><div id="bar2" style="height:100%;background:var(--v);width:0"></div></div>
+     <div style="flex:1;background:#34382f;border-radius:4px;overflow:hidden"><div id="bar3" style="height:100%;background:var(--v);width:0"></div></div>
+   </div>
+
+   <!-- fenêtre UI -->
+   <div id="ui" class="card" style="left:60px;top:790px;width:960px;height:640px;overflow:hidden;border-radius:30px">
+     <div style="position:absolute;left:0;top:0;width:100%;height:54px;border-bottom:2px solid #34382f;display:flex;gap:10px;align-items:center;padding-left:22px">
+       <i style="width:14px;height:14px;border-radius:50%;background:#545a50"></i><i style="width:14px;height:14px;border-radius:50%;background:#545a50"></i><i style="width:14px;height:14px;border-radius:50%;background:var(--v)"></i>
+     </div>
+
+     <!-- étape 1 : cartes -->
+     <div id="ui1" style="position:absolute;left:0;top:54px;width:100%;height:586px">
+       <div id="c1a" class="abs" style="left:34px;top:60px;width:262px;height:370px;border:3px dashed #3b4037;border-radius:18px"><div style="margin:26px;height:210px;background:#252922;border-radius:10px"></div><div style="margin:0 26px;height:16px;width:60%;background:#2c3128;border-radius:8px"></div></div>
+       <div id="c1c" class="abs" style="left:664px;top:60px;width:262px;height:370px;border:3px dashed #3b4037;border-radius:18px"><div style="margin:26px;height:210px;background:#252922;border-radius:10px"></div><div style="margin:0 26px;height:16px;width:60%;background:#2c3128;border-radius:8px"></div></div>
+       <div id="c1b" class="abs" style="left:306px;top:44px;width:348px;height:400px;border-radius:20px;overflow:visible">
+         <img src="assets/poster_sem_demora.png" class="shadow" style="width:348px;position:absolute;left:0;top:-20px">
+       </div>
+       <div id="c1sel" class="pill" style="left:350px;top:30px;font-size:22px;padding:10px 20px;background:var(--mint);color:#102018;opacity:0">✓ selected</div>
+       <div id="dl" class="pill" style="left:260px;top:468px;width:440px;height:80px;background:var(--v);color:var(--off);font-size:28px;display:flex;align-items:center;justify-content:center;gap:16px"><span>↓ Download sound</span></div>
+       <div id="wave" style="position:absolute;left:730px;top:476px;height:64px;width:200px;display:flex;gap:6px;align-items:center;opacity:0"></div>
+       <svg id="cur" class="abs" width="70" height="70" viewBox="0 0 24 24" style="left:0;top:0;z-index:4;filter:drop-shadow(0 4px 6px rgba(0,0,0,.6))"><path d="M4 2l15 9-6.5 1.6L9.5 19z" fill="#f4f1ec" stroke="#111" stroke-width="1.2"/></svg>
+       <div id="ripple" class="abs" style="left:0;top:0;width:90px;height:90px;border-radius:50%;border:4px solid var(--lil);opacity:0"></div>
+     </div>
+
+     <!-- étape 2 : timeline -->
+     <div id="ui2" style="position:absolute;left:0;top:54px;width:100%;height:586px">
+       <div id="prev" style="position:absolute;left:34px;top:26px;width:300px;height:230px;border-radius:16px;background:#101210;overflow:hidden;border:2px solid #3b4037">
+         <img src="assets/poster_sem_demora.png" style="position:absolute;left:30px;top:-42px;width:240px;opacity:.9" id="prevImg">
+         <div style="position:absolute;left:12px;bottom:10px;font-weight:700;font-size:18px;letter-spacing:.12em;color:var(--lil)" id="prevTc">00:00</div>
+       </div>
+       <div id="apps" style="position:absolute;left:360px;top:26px;width:566px;display:flex;flex-direction:column;gap:14px">
+         <div class="pill" id="app1" style="position:relative;font-size:26px;padding:14px 24px;border:3px solid var(--off);width:max-content">CapCut</div>
+         <div class="pill" id="app2" style="position:relative;font-size:26px;padding:14px 24px;border:3px solid var(--off);width:max-content">After Effects</div>
+         <div class="pill" id="app3" style="position:relative;font-size:26px;padding:14px 24px;border:3px solid var(--off);width:max-content">Alight Motion</div>
+       </div>
+       <div style="position:absolute;left:34px;top:288px;width:892px;height:40px;border-bottom:2px solid #34382f;background:repeating-linear-gradient(90deg,#545a50 0 2px,transparent 2px 28px);-webkit-mask-image:linear-gradient(#000 0 50%,transparent 50%)"></div>
+       <div id="trk" style="position:absolute;left:34px;top:340px;width:892px;height:210px"></div>
+       <div id="ph2" style="position:absolute;left:34px;top:282px;width:4px;height:278px;background:var(--lil);box-shadow:0 0 16px var(--lil)"></div>
+     </div>
+
+     <!-- étape 3 : lien -->
+     <div id="ui3" style="position:absolute;left:0;top:54px;width:100%;height:586px">
+       <div id="vid" class="abs" style="left:300px;top:40px;width:360px;height:480px;border-radius:28px;overflow:hidden;border:3px solid var(--off);background:#101210">
+         <img src="assets/poster_sem_demora.png" style="position:absolute;left:12px;top:30px;width:336px">
+       </div>
+       <div id="chip" class="pill" style="left:230px;top:236px;font-size:30px;padding:24px 34px;background:var(--off);color:#14170f;opacity:0">🔗 your TikTok link</div>
+       <div id="field" style="position:absolute;left:34px;top:420px;width:892px;height:100px;border-radius:20px;border:3px solid var(--off);opacity:0">
+         <div style="position:absolute;left:28px;top:0;height:100%;display:flex;align-items:center;font-weight:700;font-size:30px;color:var(--gray);letter-spacing:.04em" id="fieldTx"></div>
+         <div id="sendBtn" class="pill" style="right:12px;top:12px;height:70px;padding:0 34px;display:flex;align-items:center;background:var(--v);font-size:28px">Submit →</div>
+       </div>
+       <div id="sent" class="pill" style="left:330px;top:130px;font-size:30px;padding:20px 34px;background:var(--mint);color:#102018;opacity:0">✓ link sent</div>
+     </div>
+   </div>
+  </div>
+
+  <!-- ============ SCÈNE 5 — DEUX FAÇONS DE GAGNER ============ -->
+  <div class="scene" id="s5">
+   <div class="kick" id="s5kick" style="top:232px">How you win</div>
+   <div class="t" data-fit="800" id="s5a" style="top:285px">Two ways</div>
+   <div class="t" data-fit="800" id="s5b" style="top:430px">to <span class="hl" id="hl5" style="--p:0">get paid.</span></div>
+
+   <div id="cardL" class="card abs" style="left:60px;top:650px;width:450px;height:520px;padding:40px">
+     <svg width="120" height="100" viewBox="0 0 60 50" style="position:absolute;left:36px;top:30px" id="crown"><path d="M6 14l10 12 10-18 10 18 10-12-4 26H10z M10 44h40" fill="none" stroke="#b99cff" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round"/></svg>
+     <div class="t" data-fit="360" id="bestT" style="left:40px;top:160px">Best edit</div>
+     <div style="position:absolute;left:40px;top:240px;width:370px;font-weight:700;font-size:30px;line-height:1.3;letter-spacing:.07em;text-transform:uppercase;color:var(--gray)">Creativity.<br>Technique.<br>Originality.</div>
+     <div class="pill" style="left:40px;bottom:36px;font-size:24px;color:var(--lil);letter-spacing:.16em">→ Podium</div>
+   </div>
+   <div id="cardR" class="card abs" style="left:570px;top:650px;width:450px;height:520px;padding:40px">
+     <svg width="90" height="100" viewBox="0 0 44 50" style="position:absolute;left:40px;top:30px" id="flame"><path d="M22 4c2 9 12 12 12 24a12 12 0 0 1-24 0c0-5 3-8 6-11 0 5 2 7 4 7 0-6-1-12 2-20z M22 34c-3 0-5 2-5 5s2 5 5 5 5-2 5-5-2-5-5-5z" fill="none" stroke="#b99cff" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round"/></svg>
+     <div class="t" data-fit="370" id="mostT" style="left:40px;top:160px">Most views</div>
+     <div style="position:absolute;left:40px;top:240px;width:370px;font-weight:700;font-size:28px;line-height:1.3;letter-spacing:.05em;text-transform:uppercase;color:var(--gray)">Your edit blows up? <span style="color:var(--off)">Views can pay too.</span></div>
+     <div class="t" id="views" style="left:40px;top:400px;font-size:56px;color:var(--mint)">0</div>
+     <div class="pill" style="left:40px;bottom:36px;font-size:24px;color:var(--lil);letter-spacing:.16em">→ Virality bonus</div>
+   </div>
+   <div id="join" class="abs" style="left:520px;top:900px;width:40px;height:40px;opacity:0"><div style="position:absolute;left:12px;top:-230px;width:16px;height:520px;background:var(--v);border-radius:8px"></div></div>
+   <div class="t" data-fit="720" id="s5c" style="top:1215px">Your skills.</div>
+   <div class="t" data-fit="720" id="s5d" style="top:1320px"><span class="hl b" id="hl5b" style="--p:0">Your shot.</span></div>
+   <div id="disc5" class="sub" style="top:1478px;font-size:24px;line-height:1.35;white-space:normal;width:900px;letter-spacing:.02em;color:var(--gray)">Prizes depend on each contest's rules. Entering does not guarantee a win.</div>
+  </div>
+
+  <!-- ============ SCÈNE 6 — PREUVE SOCIALE ============ -->
+  <div class="scene" id="s6">
+   <div class="kick" id="s6kick" style="top:232px">It's already paying</div>
+   <div class="t" data-fit="880" id="s6a" style="top:285px">Real editors.</div>
+   <div class="t" data-fit="880" id="s6b" style="top:430px"><span class="hl c" id="hl6" style="--p:0">Real wins.</span></div>
+   <div class="t" data-fit="930" id="amt" style="top:640px;color:var(--mint);letter-spacing:-0.045em">€5,935</div>
+   <svg class="dr" id="ul6" style="left:60px;top:925px" width="860" height="30"><path id="ul6p" d="M3 18 C 180 6, 520 22, 852 10"/></svg>
+   <div class="sub" id="s6c" style="top:985px;font-size:44px">already won by <b style="color:var(--off)"><span id="eds">0</span> editors</b> on TVEC</div>
+   <div class="rule" id="s6r" style="top:1115px;width:880px"></div>
+   <div class="t" id="n900" data-fit="330" style="left:78px;top:1170px;font-size:110px">€900</div>
+   <svg class="dr" id="circ" style="left:34px;top:1136px" width="420" height="190"><path id="circp" d="M60 92 C 26 40, 150 8, 270 12 C 380 16, 412 70, 380 122 C 340 180, 130 188, 52 148 C 14 126, 28 80, 120 40"/></svg>
+   <div class="sub" id="s6d" style="left:68px;top:1318px;font-size:32px">biggest single win</div>
+   <div class="t" id="n715" style="left:560px;top:1170px;font-size:110px">715</div>
+   <div class="sub" id="s6e" style="left:562px;top:1318px;font-size:32px">edits submitted</div>
+   <div class="sub" id="s6f" style="top:1440px;font-size:22px;letter-spacing:.06em;color:#7d807a">STATS AS SHOWN IN TVEC'S PUBLISHED VISUALS</div>
+  </div>
+
+  <!-- ============ SCÈNE 7 — ACCESSIBLE À TOUS ============ -->
+  <div class="scene" id="s7">
+   <div class="kick" id="s7kick" style="top:232px">Who can join?</div>
+   <div class="t" data-fit="760" id="s7a" style="top:285px">Probably</div>
+   <div class="t" data-fit="400" id="s7b" style="top:430px"><span class="hl" id="hl7" style="--p:0">you.</span></div>
+   <div id="rows"></div>
+  </div>
+
+  <!-- ============ SCÈNE 8 — CTA ============ -->
+  <div class="scene" id="s8">
+   <div id="ring" class="abs" style="left:240px;top:210px;width:600px;height:600px;border-radius:50%;border:6px solid var(--v);opacity:0"></div>
+   <div id="ring2" class="abs" style="left:240px;top:210px;width:600px;height:600px;border-radius:50%;border:3px solid var(--lil);opacity:0"></div>
+   <img id="logo8" class="abs" src="assets/logo_tvec_x3.png" style="left:270px;top:405px;width:540px;filter:drop-shadow(0 0 40px rgba(107,63,230,.8))">
+   <div class="t" data-fit="860" id="s8a" style="top:640px;left:110px">Your next edit</div>
+   <div class="t" data-fit="860" id="s8b" style="top:775px;left:110px">could <span class="hl b" id="hl8" style="--p:0">pay you.</span></div>
+   <div id="btnW" class="abs" style="left:60px;top:960px;width:960px;height:220px;perspective:1200px">
+     <div id="btn" class="abs" style="left:0;top:0;width:960px;height:210px;border-radius:34px;background:var(--off);display:flex;align-items:center;justify-content:center;box-shadow:0 30px 60px rgba(0,0,0,.6),0 0 0 0 rgba(107,63,230,0)">
+       <div class="t" id="btnT" data-fit="780" style="position:relative;left:auto;color:#111411;transform-origin:50% 50%">Join free on tvec.gg <span id="arr" style="display:inline-block">→</span></div>
+     </div>
+   </div>
+   <svg id="cur8" class="abs" width="110" height="110" viewBox="0 0 24 24" style="left:0;top:0;z-index:6;filter:drop-shadow(0 6px 10px rgba(0,0,0,.7))"><path d="M4 2l15 9-6.5 1.6L9.5 19z" fill="#f4f1ec" stroke="#111" stroke-width="1.1"/></svg>
+   <div id="rip8" class="abs" style="left:0;top:0;width:140px;height:140px;border-radius:50%;border:6px solid var(--lil);opacity:0"></div>
+   <div class="hand" id="lib" style="left:790px;top:1215px;font-size:50px">link in bio</div>
+   <svg class="dr" id="libA" style="left:690px;top:1190px" width="120" height="80"><path id="libAp" d="M110 60 C 80 70, 40 60, 22 18 M 22 18 L 10 40 M 22 18 L 46 28"/></svg>
+   <div id="disc8" class="sub" style="left:110px;top:1330px;width:860px;white-space:normal;font-size:24px;line-height:1.35">Prizes depend on each contest's rules. Entering does not guarantee a win.</div>
+  </div>
+
+ </div><!-- /cam -->
+ <div id="wipe"><div class="m"></div><div class="l"></div></div>
+ <div id="flash"></div>
+ <div id="vig"></div>
+ <div id="grain"></div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const C=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const P=(t,a,b)=>C((t-a)/(b-a));
+const E={out3:x=>1-Math.pow(1-x,3),out5:x=>1-Math.pow(1-x,5),expo:x=>x>=1?1:1-Math.pow(2,-10*x),inout:x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2,in3:x=>x*x*x,back:x=>{const a=1.70158,b=a+1;return 1+b*Math.pow(x-1,3)+a*Math.pow(x-1,2)}};
+const lerp=(a,b,k)=>a+(b-a)*k;
+function set(el,o){ // x,y,s,r,o
+  const {x=0,y=0,s=1,r=0,o:op=1}=o;
+  el.style.transform=`translate(${x}px,${y}px) rotate(${r}deg) scale(${s})`;
+  el.style.opacity=op;
+}
+function pop(el,t,t0,o={}){const d=o.d||.4;const p=P(t,t0,t0+d);const e=(o.ease||E.out5)(p);
+  set(el,{x:(o.x||0)*(1-e),y:(o.y||0)*(1-e),s:lerp(o.s??1.35,1,e),r:(o.r||0)*(1-e),o:p>0?1:0});return p}
+function show(el,on){el.style.display=on?'block':'none'}
+function drawPath(p,k){const L=p._L||(p._L=p.getTotalLength());p.style.strokeDasharray=L;p.style.strokeDashoffset=L*(1-k)}
+function hl(el,k){el.style.setProperty('--p',k)}
+const sh=(t,t0,amp=16,dur=.32)=>{const d=t-t0;if(d<0||d>dur)return[0,0];const k=Math.pow(1-d/dur,2)*amp;return[Math.sin(d*170+1)*k,Math.cos(d*143)*k*.7]};
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+
+/* ---------- setup ---------- */
+function setup(){
+  $$('.scene').forEach(e=>{e.style.display='block';e.style.visibility='hidden'});
+  const big=$('#big');'€9,500'.split('').forEach(ch=>{const s=document.createElement('span');s.textContent=ch;s.style.cssText='display:inline-block;will-change:transform';big.appendChild(s)});
+  // fit text
+  $$('[data-fit]').forEach(el=>{el.style.fontSize='100px';const w=el.offsetWidth;el.style.fontSize=(100*parseFloat(el.dataset.fit)/w)+'px'});
+  // film strip
+  const imgs=['poster_sem_demora','g_funk','g_baila','g_sem'];const row=$('#stripRow');let h='';
+  for(let i=0;i<26;i++){h+=i%3==2?`<div style="width:230px;height:300px;background:var(--v);border-radius:10px;flex:none"></div>`:`<div style="width:230px;height:300px;border-radius:10px;overflow:hidden;flex:none;background:#101210;border:2px solid #3b4037"><img src="assets/${imgs[i%4]}.png" style="width:300px;margin:-20px 0 0 -35px"></div>`}
+  row.innerHTML=h;
+  // title slices (fragments)
+  const sl=$('#slices'),tt=$('#title1');
+  for(let i=0;i<8;i++){const w=document.createElement('div');w.className='abs';w.style.cssText=`left:0;top:0;width:1080px;height:1920px;clip-path:inset(${420+i*80}px 0 ${1920-(500+i*80)}px 0);display:none`;
+    const c=tt.cloneNode(true);c.removeAttribute('id');c.querySelectorAll('[id]').forEach(n=>n.removeAttribute('id'));w.appendChild(c);sl.appendChild(w)}
+  // glitch layers
+  [$('#gl1'),$('#gl2')].forEach((g,i)=>{const c=tt.cloneNode(true);c.removeAttribute('id');c.querySelectorAll('[id]').forEach(n=>n.removeAttribute('id'));
+    c.querySelectorAll('.t').forEach(n=>n.style.color=i?'var(--mint)':'var(--v)');c.querySelectorAll('.hl').forEach(n=>n.style.setProperty('--p',0));g.appendChild(c)});
+  // big number chars
+  // waveform
+  const wv=$('#wave');for(let i=0;i<14;i++){const b=document.createElement('i');b.style.cssText='width:8px;border-radius:4px;background:var(--mint);height:20px;display:block';wv.appendChild(b)}
+  // timeline tracks
+  const trk=$('#trk');const cols=['var(--v)','var(--lil)','var(--mint)','var(--v)','#8a62ff','var(--lil)','var(--v)','var(--mint)'];
+  const lanes=[[0,170,0],[176,120,1],[300,210,3],[514,150,4],[668,224,6]];const lane2=[[40,200,2],[250,160,5],[420,230,7],[660,160,1]];
+  let th='';lanes.forEach(([x,w,c],i)=>th+=`<div class="clip" data-i="${i}" style="position:absolute;left:${x}px;top:0;width:${w}px;height:60px;border-radius:10px;background:${cols[c]};transform-origin:0 50%"></div>`);
+  lane2.forEach(([x,w,c],i)=>th+=`<div class="clip" data-i="${i+5}" style="position:absolute;left:${x}px;top:76px;width:${w}px;height:60px;border-radius:10px;background:${cols[c]};opacity:.85;transform-origin:0 50%"></div>`);
+  let wf='';for(let i=0;i<110;i++)wf+=`<i class="wf" style="position:absolute;left:${i*8}px;top:${172-(8+Math.abs(Math.sin(i*1.7)*Math.cos(i*.31))*30)/2}px;width:5px;height:${8+Math.abs(Math.sin(i*1.7)*Math.cos(i*.31))*30}px;background:#545a50;border-radius:3px"></i>`;
+  trk.innerHTML=th+wf;
+  // checklist rows
+  const R=[['Free to join.','No fee, no subscription.'],['10+ TikTok followers.',"That's all you need to enter."],['Use your favorite editing app.','CapCut, After Effects, Alight Motion…'],['Payouts via PayPal.','Paid out to your PayPal.']];
+  const rows=$('#rows');R.forEach((r,i)=>{const y=650+i*190;rows.insertAdjacentHTML('beforeend',`
+   <div class="rule" style="top:${y}px;width:880px" id="rr${i}"></div>
+   <svg class="dr" id="ck${i}" style="left:62px;top:${y+40}px" width="100" height="90" viewBox="0 0 100 90"><path id="ckp${i}" d="M10 46 L38 76 L90 12"/></svg>
+   <div class="t" id="rt${i}" data-fit="${[520,720,760,640][i]}" style="left:190px;top:${y+26}px;font-size:60px">${r[0]}</div>
+   <div class="sub" id="rs${i}" style="left:192px;top:${y+104}px;font-size:34px">${r[1]}</div>`)});
+  $$('#rows [data-fit]').forEach(el=>{el.style.fontSize='100px';const w=el.offsetWidth;el.style.fontSize=Math.min(72,100*parseFloat(el.dataset.fit)/w)+'px'});
+  $$('.scene').forEach(e=>{e.style.display='none';e.style.visibility='visible'});
+}
+
+/* ---------- transitions violettes ---------- */
+function wipe(t,t0,dir){
+  const w=$('#wipe'),m=w.querySelector('.m'),l=w.querySelector('.l');const d=.22;const p=P(t,t0-d,t0+d);
+  if(p<=0||p>=1){w.style.display='none';return}
+  w.style.display='block';
+  const a=E.inout(P(t,t0-d,t0)),b=E.inout(P(t,t0,t0+d)); // a: couvre, b: découvre
+  const hor=dir==='R'||dir==='L',sg=(dir==='R'||dir==='D')?1:-1;
+  if(hor){const W=1080;const from=sg>0?-W:W;const x1=lerp(from,0,a);const x2=lerp(0,-from,b);
+    m.style.transform=`translateX(${a<1?x1:x2}px)`;l.style.cssText=`position:absolute;top:0;height:1920px;width:60px;background:var(--mint);left:${a<1?(sg>0?x1+W:x1-60):(sg>0?x2+W:x2-60)}px`;
+  }else{const H=1920;const from=sg>0?-H:H;const y1=lerp(from,0,a);const y2=lerp(0,-from,b);
+    m.style.transform=`translateY(${a<1?y1:y2}px)`;l.style.cssText=`position:absolute;left:0;width:1080px;height:60px;background:var(--mint);top:${a<1?(sg>0?y1+H:y1-60):(sg>0?y2+H:y2-60)}px`;}
+}
+
+/* ---------- SEEK ---------- */
+const S=[[0,3.3],[3,6.7],[6.3,10.2],[9.8,17.2],[16.8,22.7],[22.3,26.7],[26.3,30.2],[29.8,36]];
+function seek(t){
+  const sw=[3.0,6.5,10,17,22.5,26.5,30];
+  let cur=0;sw.forEach((q,i)=>{if(t>=q)cur=i+1});
+  for(let i=0;i<8;i++)show($('#s'+(i+1)),i===cur||(i===0&&t<3.3));
+  show($('#hdr'),t>=3.2&&t<30);
+  // caméra : tremblements aux impacts + dérive lente 2.5D
+  const hits=[0,0.5,1.5,6.5,8.0,23.5,31.5];let dx=0,dy=0;hits.forEach(h=>{const q=sh(t,h,h===0?10:18);dx+=q[0];dy+=q[1]});
+  const camS=1+0.025*Math.sin(t*.35);
+  $('#cam').style.transform=`translate(${dx}px,${dy}px) scale(${camS})`;
+  set($('#glow'),{x:Math.sin(t*.4)*60,y:Math.cos(t*.3)*40+Math.min(t,36)*3});
+  // grain jitter
+  $('#grain').style.transform=`translate(${(Math.sin(t*91)*40)|0}px,${(Math.cos(t*77)*40)|0}px)`;
+
+  // ---- flash violet
+  let fl=0;[[0.06,.28,.95],[0.5,.14,.6],[1.5,.2,.9],[6.5,.12,0],[31.5,.2,.7]].forEach(([a,d,k])=>{const p=P(t,a,a+d);if(p>0&&p<1)fl=Math.max(fl,k*(1-p))});
+  $('#flash').style.opacity=fl;
+
+  if(t<3.3)S1(t);
+  [null,S2,S3,S4,S5,S6,S7,S8].forEach((f,i)=>{if(f&&i===cur)f(t)});
+  // transitions
+  $('#wipe').style.display='none';
+  [[6.5,'R'],[10,'U'],[17,'L'],[22.5,'R'],[26.5,'D']].forEach(([a,d])=>wipe(t,a,d));
+  // whip blur (scène)
+  const w=[17].some(a=>Math.abs(t-a)<.22);$('#cam').style.filter=w?'blur(6px)':'none';
+}
+
+/* ---------- SCÈNE 1 ---------- */
+function S1(t){
+  // frames qui défilent + curseur de timeline
+  const sa=P(t,.1,.5),sd=E.out3(P(t,.5,.9));
+  const strip=$('#strip'),ph=$('#playhead');
+  const k=t<.5?1:1-.65*sd;
+  strip.style.opacity=t<.1?0:(t<.5?1:lerp(1,.28,sd));
+  strip.style.transform=`translateY(${lerp(0,560,sd)}px) scale(${lerp(1,.9,sd)})`;
+  $('#stripRow').style.transform=`translateX(${-(t*2600)%1000}px)`;
+  $('#ruler').style.transform=`translateX(${-(t*2600)%90}px)`;
+  ph.style.opacity=t<.1?0:(t<.5?1:lerp(1,.4,sd));
+  ph.style.transform=`translate(${lerp(-540,0,E.out3(P(t,.1,.45)))}px,${lerp(0,560,sd)}px)`;
+  // titre : impact 1 (0.5) et impact 2 (1.5)
+  const a=pop($('#l1a'),t,.5,{d:.28,s:1.9});
+  const b=pop($('#l1b'),t,.5,{d:.28,s:1.5,ease:E.expo});
+  set($('#l1a'),{s:lerp(1.9,1,E.expo(P(t,.5,.78))),o:t>=.5?1:0});
+  const c=pop($('#l1c'),t,1.5,{d:.26,s:1.7,y:30});
+  hl($('#hlFree'),E.out3(P(t,1.55,1.9)));
+  const kk=P(t,.9,1.2);$('#s1kick').style.opacity=E.out3(kk);$('#s1kick').style.transform=`translateY(${(1-E.out3(kk))*20}px)`;
+  // micro-glitch aux impacts
+  const g=[.5,1.5].some(h=>t>=h&&t<h+.12);
+  [$('#gl1'),$('#gl2')].forEach((e,i)=>{e.style.display=g?'block':'none';if(g){const hh=t<1?.5:1.5;const n=Math.floor((t-hh)*30);e.style.transform=`translate(${(i?-1:1)*(14+n*6)}px,${(i?1:-1)*4}px)`;e.style.clipPath=`inset(${i?55:28}% 0 ${i?18:52}% 0)`;e.style.opacity=.85}});
+  // sortie en fragments (2.8→3.25)
+  const x=P(t,2.8,3.25);const frag=x>0;
+  show($('#title1'),!frag);
+  $$('#slices > div').forEach((w,i)=>{w.style.display=frag?'block':'none';const dir=i%2?1:-1;const e=E.in3(x);w.style.transform=`translateX(${dir*e*1300}px)`;w.style.opacity=1-e*.6});
+  $('#s1kick').style.display=frag?'none':'block';
+  if(frag){strip.style.opacity=lerp(.28,0,x)}
+}
+
+/* ---------- SCÈNE 2 ---------- */
+function S2(t){
+  const o=t-3;
+  pop($('#s2kick'),t,3.15,{d:.3,s:1,y:20});
+  // titre : whip depuis la gauche
+  pop($('#s2a'),t,3.2,{d:.35,s:1,x:-500});
+  pop($('#s2b'),t,3.3,{d:.35,s:1,x:500});
+  hl($('#hl2'),E.out3(P(t,3.55,3.9)));
+  // affiches : posters collés, rotation + ombre, entrée staggerée
+  const grp=$('#grp2');
+  const drift=P(t,3,6.6);
+  grp.style.transform=`scale(${lerp(1.0,1.07,drift)}) translateX(${lerp(14,-14,drift)}px)`;
+  const defs=[['#p2a',3.35,-700,200,-14],['#p2b',3.5,0,700,8],['#p2c',3.65,700,200,12]];
+  defs.forEach(([id,t0,x,y,r])=>{const el=$(id);const p=P(t,t0,t0+.5);const e=E.out5(p);const bk=E.back(p);
+    el.style.transform=`translate(${x*(1-e)}px,${y*(1-e)}px) rotate(${r*(1-e)}deg) scale(${lerp(1.5,1,bk)})`;el.style.opacity=p>0?1:0});
+  pop($('#s2c'),t,5.0,{d:.3,s:1,x:-300});
+  pop($('#s2d'),t,5.25,{d:.3,s:1,x:300});
+  hl($('#hl2b'),E.out3(P(t,5.45,5.8)));
+  // sortie
+  if(t>6.3){grp.style.transform+=` translateY(${E.in3(P(t,6.3,6.6))*900}px)`}
+}
+
+/* ---------- SCÈNE 3 ---------- */
+function S3(t){
+  pop($('#s3kick'),t,6.6,{d:.3,s:1,y:20});
+  const ch=$$('#big span');
+  const seed=[[-420,-300,-40],[380,-380,30],[-300,420,22],[460,260,-30],[-480,100,50],[300,-440,-20]];
+  ch.forEach((c,i)=>{const t0=6.75+i*.07;const p=P(t,t0,t0+.32);const e=E.out5(p);
+    const [x,y,r]=seed[i];c.style.transform=`translate(${x*(1-e)}px,${y*(1-e)}px) rotate(${r*(1-e)}deg) scale(${lerp(2.2,1,e)})`;c.style.opacity=p>0?1:0;
+    const lock=t>t0+.32;c.style.color=lock?'var(--mint)':(i%2?'var(--mint)':'var(--v)')});
+  $('#big').style.textShadow=`${lerp(40,12,E.out3(P(t,7.1,7.4)))}px ${lerp(40,12,E.out3(P(t,7.1,7.4)))}px 0 var(--v)`;
+  drawPath($('#ul3p'),E.out3(P(t,7.4,7.8)));
+  pop($('#s3b'),t,7.4,{d:.3,s:1,y:40});
+  hl($('#hl3'),E.out3(P(t,7.65,8.0)));
+  pop($('#s3c'),t,7.85,{d:.3,s:1,y:20});
+  // succession rapide de contests
+  const g=$('#grp3');g.style.transform=`scale(.9)`;
+  [['#p3a',8.0,-600,0,-10],['#p3b',8.25,0,600,8],['#p3c',8.5,600,0,10]].forEach(([id,t0,x,y,r])=>{const el=$(id);const p=P(t,t0,t0+.4);const e=E.out5(p);
+    el.style.transform=`translate(${x*(1-e)}px,${y*(1-e)}px) rotate(${r*(1-e)}deg) scale(${lerp(1.4,1,E.back(p))})`;el.style.opacity=p>0?1:0});
+  // sortie : tout s'éloigne
+  const ex=E.in3(P(t,9.75,10));$('#s3').style.opacity=1-ex*.0;
+}
+
+/* ---------- SCÈNE 4 ---------- */
+function S4(t){
+  pop($('#s4kick'),t,10.1,{d:.3,s:1,y:20});
+  pop($('#s4a'),t,10.15,{d:.35,s:1,x:-400});
+  pop($('#s4b'),t,10.3,{d:.35,s:1,x:400});
+  hl($('#hl4'),E.out3(P(t,10.55,10.9)));
+  const steps=[11,13,15,17];
+  const idx=t<13?0:t<15?1:2;
+  const T=[['01','Pick a contest','and download the sound in one tap.'],['02','Make your edit','with any app — CapCut, After Effects…'],['03','Submit the link','post on your own TikTok, then submit on tvec.gg.']];
+  const sn=$('#stN');
+  if(sn.dataset.i!=idx){sn.dataset.i=idx;sn.textContent=T[idx][0];$('#stT').textContent=T[idx][1];$('#stS').textContent=T[idx][2];
+    const f=$('#stT');f.style.fontSize='100px';f.style.fontSize=(100*Math.min(690,f.offsetWidth)/f.offsetWidth*1)+'px';f.style.fontSize=Math.min(70,parseFloat(f.style.fontSize))+'px'}
+  const ts=steps[idx];
+  const hp=P(t,ts,ts+.3);const he=E.out5(hp);
+  $('#stepHead').style.opacity=t<11?0:1;$('#stepHead').style.transform=`translateX(${(1-he)*-120}px)`;
+  [1,2,3].forEach(i=>{$('#bar'+i).style.width=(idx+1>i?100:(idx+1===i?P(t,ts,ts+2)*100:0))+'%'});
+  [1,2,3].forEach(i=>{$('#ui'+i).style.display=(idx+1===i)?'block':'none'});
+  // apparition de la fenêtre UI
+  const up=P(t,10.2,10.9);$('#ui').style.opacity=E.out3(up);$('#ui').style.transform=`translateY(${(1-E.out3(up))*120}px)`;
+  const bars=$('#bars');bars.style.opacity=t<10.9?0:1;
+  // transitions entre étapes : petit slide
+  const ui=$('#ui');const sp=idx>0?P(t,ts,ts+.25):1;
+  if(idx>0)ui.style.transform=`translateX(${(1-E.out5(sp))*60}px)`,ui.style.opacity=lerp(.4,1,sp);
+  if(idx===0)U1(t-11);if(idx===1)U2(t-13);if(idx===2)U3(t-15);
+}
+function U1(s){
+  const cur=$('#cur'),rp=$('#ripple');
+  const a=E.inout(P(s,.2,1.0));
+  // curseur : entre en bas à droite, va sur la carte, puis sur le bouton
+  let x=lerp(860,420,a),y=lerp(520,260,a);
+  const b=E.inout(P(s,1.25,1.7));x=lerp(x,520,b);y=lerp(y,500,b);
+  cur.style.transform=`translate(${x}px,${y}px)`;
+  const card=$('#c1b');const sel=P(s,.95,1.2);
+  card.style.transform=`translateY(${-18*E.out3(sel)}px) scale(${1+.07*E.out3(sel)})`;
+  card.style.filter=sel>0?`drop-shadow(0 0 ${30*sel}px rgba(107,63,230,.95))`:'none';
+  $('#c1sel').style.opacity=E.out3(sel);$('#c1sel').style.transform=`translateY(${-16*E.out3(sel)}px)`;
+  const pulse=P(s,1.7,2.0);const dl=$('#dl');dl.style.transform=`scale(${1-.06*Math.sin(Math.min(1,pulse*2)*Math.PI/2)*(pulse<.5?1:0)+0})`;
+  dl.style.background=s>1.7?'var(--mint)':'var(--v)';dl.style.color=s>1.7?'#102018':'var(--off)';
+  rp.style.opacity=pulse>0&&pulse<1?1-pulse:0;rp.style.transform=`translate(${520-14}px,${500-4}px) scale(${.4+pulse*1.2})`;
+  const wv=$('#wave');wv.style.opacity=s>1.7?1:0;[...wv.children].forEach((b,i)=>b.style.height=(14+Math.abs(Math.sin(s*14+i*.9))*48)+'px');
+  // cartes fantômes : léger clignotement de chargement
+  $('#c1a').style.opacity=lerp(.3,1,E.out3(P(s,0,.4)));$('#c1c').style.opacity=lerp(.3,1,E.out3(P(s,.1,.5)));
+}
+function U2(s){
+  // timeline qui se remplit de clips
+  $$('#trk .clip').forEach((c,i)=>{const p=P(s,.15+i*.15,.15+i*.15+.28);c.style.transform=`scaleX(${E.out5(p)})`;c.style.opacity=p>0?(i>4?.85:1):0});
+  $$('#trk .wf').forEach((w,i)=>{w.style.background=i/110<P(s,.2,1.8)?'var(--mint)':'#545a50'});
+  const pp=P(s,.3,1.9);$('#ph2').style.left=(34+pp*892)+'px';
+  $('#prevTc').textContent='00:'+String(Math.floor(pp*34)).padStart(2,'0');
+  $('#prevImg').style.transform=`scale(${1+pp*.18}) translateX(${Math.sin(s*6)*3}px)`;
+  [1,2,3].forEach((i,k)=>{const p=P(s,.1+k*.2,.4+k*.2);const e=$('#app'+i);e.style.opacity=E.out3(p);e.style.transform=`translateX(${(1-E.out3(p))*60}px)`;e.style.borderColor=(P(s,.9+k*.35,1.1+k*.35)>0&&P(s,.9+k*.35,1.1+k*.35)<1)?'var(--lil)':'var(--off)'});
+}
+function U3(s){
+  const vid=$('#vid');const a=E.inout(P(s,.1,.8));
+  // aperçu vidéo → lien → envoi
+  vid.style.transform=`translateY(${lerp(0,-40,a)}px) scale(${lerp(1,.34,a)})`;vid.style.opacity=s<.8?1:1-E.out3(P(s,.8,1.0));
+  const chip=$('#chip');const cp=P(s,.7,1.0);chip.style.opacity=E.out3(cp);
+  const fp=P(s,.9,1.15);$('#field').style.opacity=E.out3(fp);
+  const mv=E.inout(P(s,1.05,1.45));
+  chip.style.transform=`translate(${lerp(0,40,mv)}px,${lerp(0,190,mv)}px) scale(${lerp(1,.62,mv)})`;chip.style.opacity=s<1.45?E.out3(cp):1-E.out3(P(s,1.45,1.6));
+  const txt='tvec.gg/submit';$('#fieldTx').textContent=s>1.45?txt.slice(0,Math.floor(P(s,1.45,1.7)*txt.length)):'';
+  const sb=$('#sendBtn');const click=P(s,1.7,1.9);sb.style.transform=`scale(${1-.08*Math.sin(click*Math.PI)})`;
+  $('#sent').style.opacity=E.out3(P(s,1.8,1.95));$('#sent').style.transform=`translateY(${(1-E.out5(P(s,1.8,2)))*40}px) scale(${lerp(.8,1,E.back(P(s,1.8,2)))})`;
+}
+
+/* ---------- SCÈNE 5 ---------- */
+function S5(t){
+  pop($('#s5kick'),t,17.1,{d:.3,s:1,y:20});
+  pop($('#s5a'),t,17.15,{d:.35,s:1,x:-500});
+  pop($('#s5b'),t,17.3,{d:.35,s:1,x:500});
+  hl($('#hl5'),E.out3(P(t,17.55,17.9)));
+  const L=$('#cardL'),R=$('#cardR');
+  const e1=E.out5(P(t,17.5,18.05));
+  const m=E.inout(P(t,20.0,20.5)); // les deux panneaux se rejoignent
+  L.style.transform=`translate(${lerp(-1100,0,e1)+m*18}px,${lerp(120,0,e1)}px) rotate(${lerp(-10,0,e1)+m*0}deg)`;L.style.opacity=P(t,17.5,17.6)>0?1:0;
+  R.style.transform=`translate(${lerp(1100,0,e1)-m*18}px,${lerp(-120,0,e1)}px) rotate(${lerp(10,0,e1)}deg)`;R.style.opacity=P(t,17.5,17.6)>0?1:0;
+  // éléments des cartes
+  const cr=E.out5(P(t,18.1,18.5));$('#crown').style.transform=`translateY(${(1-cr)*-60}px) scale(${lerp(1.6,1,cr)})`;$('#crown').style.opacity=cr>0?1:0;
+  const fm=E.out5(P(t,18.6,19));$('#flame').style.transform=`scale(${lerp(.2,1,E.back(P(t,18.6,19)))})`;$('#flame').style.opacity=fm>0?1:0;
+  const vp=P(t,18.8,20.0);$('#views').textContent=(vp>=1?'2.4M':(vp*2.4).toFixed(1)+'M')+' views';
+  $('#views').style.fontSize='48px';
+  const ve=E.out3(vp);$('#views').style.opacity=vp>0?1:0;
+  $('#join').style.opacity=m;
+  const jn=$('#join');set(jn,{o:m,s:1});
+  // message final
+  pop($('#s5c'),t,20.5,{d:.3,s:1.4});
+  pop($('#s5d'),t,20.7,{d:.3,s:1.4});hl($('#hl5b'),E.out3(P(t,20.9,21.25)));
+  const dsc=$('#disc5');dsc.style.opacity=E.out3(P(t,19.3,19.7));
+  // sortie
+}
+
+/* ---------- SCÈNE 6 ---------- */
+function S6(t){
+  pop($('#s6kick'),t,22.6,{d:.3,s:1,y:20});
+  pop($('#s6a'),t,22.55,{d:.3,s:1,x:-400});
+  pop($('#s6b'),t,22.7,{d:.3,s:1,x:400});
+  hl($('#hl6'),E.out3(P(t,22.9,23.25)));
+  // compteur qui s'arrête net à 5 935
+  const ap=P(t,23.0,23.5);const amt=$('#amt');
+  amt.textContent='€'+fmt(ap>=1?5935:E.out3(ap)*5935);
+  const lock=P(t,23.5,23.75);
+  amt.style.transform=`scale(${ap<=0?.6:1+.07*Math.sin(Math.min(1,lock)*Math.PI)})`;amt.style.opacity=ap>0?1:0;
+  amt.style.transformOrigin='0 50%';
+  drawPath($('#ul6p'),E.out3(P(t,23.55,23.9)));
+  const sp=P(t,23.6,23.95);$('#s6c').style.opacity=E.out3(sp);$('#eds').textContent=fmt(sp>=1?29:sp*29);
+  // 900 / 715
+  const r=P(t,24.4,24.6);$('#s6r').style.opacity=r;$('#s6r').style.width=(880*E.out3(r))+'px';
+  const p9=P(t,24.5,24.85);$('#n900').textContent='€'+fmt(p9>=1?900:E.out3(p9)*900);$('#n900').style.opacity=p9>0?1:0;
+  drawPath($('#circp'),E.out3(P(t,24.9,25.35)));pop($('#s6d'),t,24.9,{d:.3,s:1,y:20});
+  const p7=P(t,25.0,25.4);$('#n715').textContent=fmt(p7>=1?715:E.out3(p7)*715);$('#n715').style.opacity=p7>0?1:0;pop($('#s6e'),t,25.3,{d:.3,s:1,y:20});
+  $('#s6f').style.opacity=E.out3(P(t,25.5,25.9))*.9;
+}
+
+/* ---------- SCÈNE 7 ---------- */
+function S7(t){
+  pop($('#s7kick'),t,26.6,{d:.3,s:1,y:20});
+  pop($('#s7a'),t,26.6,{d:.35,s:1.0,x:-300});
+  pop($('#s7b'),t,26.75,{d:.35,s:1,x:300});hl($('#hl7'),E.out3(P(t,27.0,27.3)));
+  for(let i=0;i<4;i++){const t0=27.0+i*.75;
+    const rr=$('#rr'+i);rr.style.width=(880*E.out3(P(t,t0-.05,t0+.25)))+'px';
+    pop($('#rt'+i),t,t0,{d:.3,s:1,x:-60});pop($('#rs'+i),t,t0+.1,{d:.3,s:1,x:-40});
+    drawPath($('#ckp'+i),E.out3(P(t,t0+.05,t0+.35)));
+    $('#ck'+i).style.opacity=P(t,t0,t0+.05)>0?1:0;
+  }
+  // sortie progressive vers le CTA
+  const x=E.in3(P(t,29.5,30.0));$('#s7').style.opacity=1-x;$('#s7').style.transform=`scale(${1-x*.08})`;
+}
+
+/* ---------- SCÈNE 8 ---------- */
+function S8(t){
+  show($('#hdr'),false);
+  $('#s7').style.opacity=1;
+  const k=P(t,30,30.4);
+  // anneau violet + logo
+  const rg=$('#ring'),rg2=$('#ring2');
+  const rp=P(t,30.1,31.2);rg.style.opacity=rp>0&&rp<1?1-rp:0;rg.style.transform=`scale(${.3+rp*1.6})`;
+  const rp2=P(t,30.35,31.5);rg2.style.opacity=rp2>0&&rp2<1?(1-rp2)*.8:0;rg2.style.transform=`scale(${.3+rp2*1.9})`;
+  const lg=$('#logo8');const lp=P(t,30.1,30.7);lg.style.opacity=lp>0?1:0;lg.style.transform=`scale(${lerp(.4,1,E.back(lp))}) rotate(${(1-E.out5(lp))*-8}deg)`;
+  pop($('#s8a'),t,31.0,{d:.3,s:1,x:-400});pop($('#s8b'),t,31.15,{d:.3,s:1,x:400});hl($('#hl8'),E.out3(P(t,31.4,31.75)));
+  // bouton : impact + profondeur
+  const bp=P(t,31.5,31.9);const be=E.back(bp);
+  const hov=E.inout(P(t,33.0,33.35));
+  const btn=$('#btn');
+  const tilt=lerp(14,0,E.out5(bp))+Math.sin(t*1.3)*1.2;
+  btn.style.transform=`translateY(${lerp(120,0,E.out5(bp))}px) rotateX(${tilt}deg) scale(${lerp(.6,1,be)*(1+.045*hov)})`;
+  btn.style.opacity=bp>0?1:0;
+  btn.style.boxShadow=`0 ${lerp(30,60,hov)}px ${lerp(60,90,hov)}px rgba(0,0,0,.6),0 0 ${hov*70}px ${hov*8}px rgba(107,63,230,${.85*hov})`;
+  $('#arr').style.transform=`translateX(${hov*14+Math.sin(t*8)*3*hov}px)`;
+  // curseur simulé
+  const cur=$('#cur8');const ca=E.inout(P(t,32.5,33.35));
+  cur.style.transform=`translate(${lerp(900,700,ca)}px,${lerp(1320,1090,ca)}px)`;cur.style.opacity=P(t,32.5,32.65);
+  const cp=P(t,33.45,33.9);const rp8=$('#rip8');rp8.style.opacity=cp>0&&cp<1?1-cp:0;rp8.style.transform=`translate(${690}px,${1060}px) scale(${.3+cp*1.6})`;
+  if(cp>0&&cp<.3)btn.style.transform+=` scale(${1-.05*Math.sin(cp/.3*Math.PI)})`;
+  // annotation
+  const la=P(t,32.0,32.5);$('#lib').style.opacity=E.out3(la);$('#libA').style.opacity=la>0?1:0;drawPath($('#libAp'),E.out3(P(t,32.1,32.5)));
+  $('#disc8').style.opacity=E.out3(P(t,32.2,32.7))*.9;
+  // le CTA reste lisible jusqu'à la fin (pas de sortie)
+}
+
+Promise.all([document.fonts.load("800 100px 'Bricolage Grotesque'"),document.fonts.load("700 20px 'Manrope'"),document.fonts.load("500 20px 'Manrope'"),document.fonts.load("20px 'Caveat Brush'")]).then(()=>document.fonts.ready).then(()=>{setup();window.__ready=true;seek(0)});
+window.seek=seek;
+</script>
+</body>
+</html>
