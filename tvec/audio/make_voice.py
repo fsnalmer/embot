@@ -1,7 +1,9 @@
-"""Voix off EN (Piper TTS, voix en_US-ryan-high) calée sur la timeline + mixage avec ducking de la musique.
-Usage: python make_voice.py <model.onnx>   (venv avec piper-tts)  ->  audio/tvec_soundtrack_vo.wav"""
+"""Voix off EN calée sur la timeline + mixage avec ducking de la musique -> audio/tvec_soundtrack_vo.wav
+Moteurs (venv avec le paquet correspondant) :
+  Kokoro (par défaut, plus naturel) : python make_voice.py kokoro <dossier avec kokoro-v1.0.onnx + voices-v1.0.bin> [voix=af_heart | mélange: af_heart+am_michael]
+  Piper                             : python make_voice.py piper <modele.onnx>"""
 import sys, wave, subprocess, numpy as np, os
-MODEL=sys.argv[1]; sr=44100
+ENGINE=sys.argv[1]; MODEL=sys.argv[2]; VOICE=sys.argv[3] if len(sys.argv)>3 else 'af_heart'; sr=44100
 # (nom, temps d'entrée en s, texte, length_scale) — length_scale < 1 = plus rapide
 LINES=[
  ('hook1',0.60,'Still editing for free?',0.92),
@@ -19,7 +21,7 @@ LINES=[
  ('s7c',28.85,'Any editing app.',0.76),
  ('s7d',29.65,'PayPal payouts.',0.80),
  ('s8a',31.00,'Your next edit could pay you.',0.90),
- ('s8b',32.85,'Join free at T V E C dot G G.',0.92),
+ ('s8b',32.70,'Join free at T-V-E-C dot G-G.',0.92),
 ]
 def read(p):
     w=wave.open(p); a=np.frombuffer(w.readframes(w.getnframes()),'<i2').astype(float)/32768
@@ -30,7 +32,15 @@ def resample(a,r):
 N=int(35*sr); voice=np.zeros(N); end_prev=0
 for name,t0,text,ls in LINES:
     f=f'audio/vo/{name}.wav'
-    subprocess.run([sys.executable,'-m','piper','-m',MODEL,'-f',f,'--length-scale',str(ls),'--sentence-silence','0.18'],input=text.encode(),check=True,capture_output=True)
+    if ENGINE=='piper':
+        subprocess.run([sys.executable,'-m','piper','-m',MODEL,'-f',f,'--length-scale',str(ls),'--sentence-silence','0.18'],input=text.encode(),check=True,capture_output=True)
+    else:
+        import soundfile as sf
+        if 'KOK' not in globals():
+            from kokoro_onnx import Kokoro; KOK=Kokoro(os.path.join(MODEL,'kokoro-v1.0.onnx'),os.path.join(MODEL,'voices-v1.0.bin'))
+        if 'VSTYLE' not in globals():  # 'af_heart+am_michael' = mélange 50/50 des deux styles
+            VSTYLE=np.mean([KOK.get_voice_style(n) for n in VOICE.split('+')],axis=0) if '+' in VOICE else VOICE
+        samples,rate=KOK.create(text,voice=VSTYLE,speed=1/ls*1.08,lang='en-us'); sf.write(f,samples,rate,subtype='PCM_16')
     a,r=read(f); a=resample(a,r)
     # trim silence
     idx=np.where(np.abs(a)>.01)[0]; a=a[idx[0]:idx[-1]+1] if len(idx) else a
