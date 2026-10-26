@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="#8545ed">
+  <!-- Même tracé que ViralLogo : version autonome disponible avant React. -->
+  <defs>
+    <clipPath id="top"><polygon points="0,0 100,0 100,30 0,70"/></clipPath>
+    <clipPath id="bottom"><polygon points="0,70 100,30 100,100 0,100"/></clipPath>
+  </defs>
+  <g clip-path="url(#top)" transform="translate(-3 -3)">
+    <path d="M20 15 50 85 80 15H65L50 50 35 15Z"/><path d="M38 87h24v6H38z"/>
+  </g>
+  <g clip-path="url(#bottom)" transform="translate(3 3)">
+    <path d="M20 15 50 85 80 15H65L50 50 35 15Z"/><path d="M38 87h24v6H38z"/>
+  </g>
+</svg>

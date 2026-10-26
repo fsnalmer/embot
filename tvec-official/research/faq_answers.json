@@ -1,0 +1,118 @@
+[
+ {
+  "q": "",
+  "a": "Home\nBlog\nFAQ\nPatch notes\nAbout\nContact\nLogin\nJoin\nFR\nEN"
+ },
+ {
+  "q": "How do I create an account?",
+  "a": "Click \"Join\" in the top bar, choose your role (editor or sponsor), enter your email address and password, or sign in with Google. You can change your role at any time from your profile."
+ },
+ {
+  "q": "How does TVEC work in 30 seconds?",
+  "a": "Sponsors launch TikTok edit contests with cash prizes on any theme (music, gaming, anime, brands, etc.). Creators make their edits, post them on TikTok, and submit the link. A jury scores the entries, the algorithm counts the views, winners are selected, and they are paid."
+ },
+ {
+  "q": "Is it profitable for editors?",
+  "a": "Entry is free, with no subscription. A TVEC fee of 2% of the net sent via PayPal is withheld on withdrawal, with your prior consent."
+ },
+ {
+  "q": "How do I enter a contest?",
+  "a": "Go to “Explore,” choose a contest, read the brief and rules, download the assets (music, cover art), create your TikTok-format edit, post it on your personal TikTok account with the contest hashtag, and then paste the link into the contest page before the deadline."
+ },
+ {
+  "q": "How do I get paid if I win?",
+  "a": "After results are published, your earnings are credited to your TVEC wallet. From €10 gross, enter your PayPal email address in Wallet and confirm your withdrawal. Payment to your PayPal account is usually instant after validation, unless PayPal requires a review or additional processing time. The fee and net amount are shown before confirmation."
+ },
+ {
+  "q": "How does the jury work?",
+  "a": "We select experienced judges based specifically on the type of contest. The judging criteria are listed on the contest page. Judges assign a score out of 10 along with a comment, and the entries with the highest average score are declared the winners of the contest."
+ },
+ {
+  "q": "Can I submit multiple edits?",
+  "a": "It depends. If the contest allows multiple entries, you'll see a note about it on the page. Otherwise, only one edit per contest."
+ },
+ {
+  "q": "What happens if I lose?",
+  "a": "You leave with a published edit, views on your TikTok and nothing to lose because entry is free. Judges often leave feedback to help you improve."
+ },
+ {
+  "q": "How do I link my TikTok account?",
+  "a": "Go to \"My Profile\" and then \"Connect My TikTok Account\" at the very top. You'll need to enter your username, then add a code to your bio to verify that it's your account. All your entries must be posted on this account."
+ },
+ {
+  "q": "How do I start a contest?",
+  "a": "Click on “Start a Contest,” choose the contest type (music, gaming, anime, community, brand, etc.), fill out the form (topic, assets, brief, cash prize, duration, number of winners), and pay by card or PayPal. The contest will be reviewed within 24 hours and then published on the platform."
+ },
+ {
+  "q": "What kind of contest can I create?",
+  "a": "Any of the following: music, video games, anime, creators/influencers, movies/TV shows, Discord communities, or brands/products. You choose the category when you start, and the form will adjust accordingly."
+ },
+ {
+  "q": "Which cash prize should I choose?",
+  "a": "The minimum is €1,000. The higher the cash prize, the more entries and total views you can attract."
+ },
+ {
+  "q": "What should be included in the brief?",
+  "a": "Overall mood, scenes to avoid, visual references, provided assets (logos, images, brand guidelines), desired duration, required hashtag. The clearer the brief, the more usable the edits will be."
+ },
+ {
+  "q": "Is there a subscription to pay?",
+  "a": "No. You pay once per contest: the cashprize plus a 30% commission on your first contest, lowering with each paid contest down to 15% from your 10th (€50 minimum). No commitment."
+ },
+ {
+  "q": "Can I view the statistics for my contest?",
+  "a": "Yes, you have an Analytics page where all the contest data is tracked in real time. You can even download an Excel file that compiles all your stats."
+ },
+ {
+  "q": "What exactly am I paying for?",
+  "a": "The cashprize, credited to winners' wallets, and the TVEC service commission. A separate fee applies to winners' PayPal withdrawals. Both appear separately on the invoice. Nothing else, and nothing recurring."
+ },
+ {
+  "q": "What payment methods do you accept?",
+  "a": "Card or PayPal (via Stripe) for sponsor payments; editors receive withdrawals in their PayPal account, usually instantly after validation, subject to PayPal reviews."
+ },
+ {
+  "q": "How long will it take to receive my withdrawal?",
+  "a": "Payment to your PayPal account is usually instant after your withdrawal is validated. A PayPal review, an unclaimed payment or processing delays may postpone receipt. Make sure the email entered in Wallet is linked to your PayPal account; it can differ from your TVEC email."
+ },
+ {
+  "q": "Is there a minimum withdrawal amount?",
+  "a": "€10 gross minimum. A TVEC fee of 2% of the net sent is deducted: for a €10 debit, €9.80 is sent via PayPal. The breakdown is shown before confirmation."
+ },
+ {
+  "q": "How does the referral program work?",
+  "a": "You invite an editor with your unique code (Profile → Referrals). Each time they win a contest, you earn 10% of their prize in your wallet, for their first 3 podiums, with no cap. The bonus is paid by TVEC: your referral keeps their full prize."
+ },
+ {
+  "q": "What is A2F?",
+  "a": "Two-factor authentication sends a 6-digit code via email every time you log in. Enable it under Profile → Security. Required for certain sensitive actions (withdrawals, launching contests, moderation)."
+ },
+ {
+  "q": "How do I reset my password?",
+  "a": "On the login page, click \"Forgot Password\" and enter your email address. You will receive a link that takes you directly to the password reset form on the TVEC website."
+ },
+ {
+  "q": "How do I delete my account?",
+  "a": "Profile → Safety Zone → \"Delete my account.\" A2F is required for this action. All your data will be permanently deleted."
+ },
+ {
+  "q": "How do I report cheating?",
+  "a": "If you see a suspicious edit, click the report icon (warning triangle) → select a reason. Moderators will be notified and can ban the cheater."
+ },
+ {
+  "q": "What data do you keep?",
+  "a": "Profile (email, username, TikTok), entries, winnings. You can export or delete everything from Profile → My Data. GDPR compliant."
+ },
+ {
+  "q": "How do you count views?",
+  "a": "We use the API from a verified TikTok scraper to update the statistics for all videos submitted to our contests once a day."
+ },
+ {
+  "q": "What happens if I cheat?",
+  "a": "Immediate disqualification + account suspension for repeat offenses. Your pending winnings will be forfeited. There are no second chances for intentional fraud."
+ },
+ {
+  "q": "Blind mode for the jury?",
+  "a": "The sponsor can enable \"blind mode\": the jury evaluates entries without seeing the creator's name or TikTok views, to avoid bias. The evaluation is based strictly on quality."
+ }
+]
