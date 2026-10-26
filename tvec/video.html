@@ -531,7 +531,7 @@ function S7(t){
   pop($('#s7kick'),t,26.6,{d:.3,s:1,y:20});
   pop($('#s7a'),t,26.6,{d:.35,s:1.0,x:-300});
   pop($('#s7b'),t,26.75,{d:.35,s:1,x:300});hl($('#hl7'),E.out3(P(t,27.0,27.3)));
-  for(let i=0;i<4;i++){const t0=27.5+i*.6;
+  for(let i=0;i<4;i++){const t0=27.0+i*.75;
     const rr=$('#rr'+i);rr.style.width=(880*E.out3(P(t,t0-.05,t0+.25)))+'px';
     pop($('#rt'+i),t,t0,{d:.3,s:1,x:-60});pop($('#rs'+i),t,t0+.1,{d:.3,s:1,x:-40});
     drawPath($('#ckp'+i),E.out3(P(t,t0+.05,t0+.35)));
