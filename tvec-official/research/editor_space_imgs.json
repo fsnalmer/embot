@@ -1,0 +1,27 @@
+{
+ "imgs": [
+  {
+   "src": "https://tvec.gg/assets/hero-print-reference-1672-CFHPEM-L.webp",
+   "w": 860,
+   "h": 484
+  },
+  {
+   "src": "https://firebasestorage.googleapis.com/v0/b/the-viral-edit-contest.firebasestorage.app/o/artifacts%2Fviral-contest-prod%2Fposters%2F1791891080943_790d5b9c7c3fa27d.webp?alt=media&token=40639e8b-589d-41fb-b744-e0a308721840",
+   "w": 0,
+   "h": 0
+  },
+  {
+   "src": "https://tvec.gg/assets/tvec-card-cutout-carousel-DVFa_FQL.webp",
+   "w": 960,
+   "h": 540
+  }
+ ],
+ "net": {
+  "https://tvec.gg/tvec-loading-mark.svg": "image/svg+xml",
+  "https://tvec.gg/assets/chooser-print-mobile-v1-BtdJVLuR.webp": "image/webp",
+  "https://tvec.gg/assets/sponsor-print-texture-BoFBWYFY.webp": "image/webp",
+  "https://tvec.gg/assets/hero-print-reference-1672-CFHPEM-L.webp": "image/webp",
+  "https://tvec.gg/assets/hero-print-reference-1000-SLCeBqpl.webp": "image/webp",
+  "https://tvec.gg/assets/tvec-card-cutout-carousel-DVFa_FQL.webp": "image/webp"
+ }
+}

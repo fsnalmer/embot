@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>TVEC — Official Edit 9:16</title>
+<meta name="viewport" content="width=1080">
+<link rel="stylesheet" href="../fonts/fonts.css">
+<style>
+:root{--bg:#060606;--v:#8545ed;--vd:#5a2bc4;--lil:#b99cff;--w:#f5f3f8;--g:#a9a2c0;--dim:#6f6882;--line:#ffffff1f}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;background:#000;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:var(--bg);font-family:'Inter',sans-serif;color:var(--w)}
+#cam{position:absolute;inset:0;transform-origin:540px 900px}
+.scene{position:absolute;inset:0;display:none;overflow:hidden}
+.a{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.t{position:absolute;white-space:nowrap;line-height:.92;font-family:'Suprapower','Inter',sans-serif;font-weight:900;font-style:italic;letter-spacing:-.02em;text-transform:uppercase;color:var(--w);display:inline-block;transform-origin:0 60%}
+.t.c{transform-origin:50% 60%}
+.v{color:var(--v)}
+.tag{position:absolute;white-space:nowrap;font-weight:600;font-size:27px;letter-spacing:.2em;text-transform:uppercase;color:var(--lil)}
+.tag:before{content:'+';color:var(--v);margin-right:14px;font-weight:800}
+.body{position:absolute;font-weight:400;font-size:38px;line-height:1.3;color:var(--g)}
+.cham{clip-path:polygon(22px 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%,0 22px)}
+.btn{position:absolute;display:flex;align-items:center;justify-content:space-between;background:var(--v);color:#fff;font-weight:700;letter-spacing:.01em}
+.brk{position:absolute;width:46px;height:46px;border-color:#ffffff55;border-style:solid;border-width:0}
+.dots{position:absolute;inset:0;background:url(../assets/dots.png);opacity:.22;-webkit-mask-image:radial-gradient(ellipse at 50% 40%,#000 20%,transparent 85%)}
+img{display:block}
+.card{position:absolute;border:2px solid #ffffff33;background:#0d0a18;border-radius:18px}
+.pill{position:absolute;white-space:nowrap;border-radius:999px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+#grain{position:absolute;inset:-100px;background:url(../assets/grain.png);opacity:.09;mix-blend-mode:overlay;pointer-events:none;z-index:50}
+#vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,transparent 50%,rgba(0,0,0,.65) 100%);pointer-events:none;z-index:49}
+#flash{position:absolute;inset:0;background:var(--v);opacity:0;z-index:60;pointer-events:none}
+#flashw{position:absolute;inset:0;background:#fff;opacity:0;z-index:61;pointer-events:none}
+#slash{position:absolute;left:-300px;top:-200px;width:1700px;height:2400px;z-index:55;display:none;pointer-events:none}
+.rg{text-shadow:7px 0 #ff2d6acc,-7px 0 #1fe6ffcc}
+.rank{position:absolute;left:60px;width:900px;height:112px;border-bottom:2px solid #ffffff14;display:flex;align-items:center}
+</style>
+</head>
+<body>
+<div id="stage"><div id="cam"></div>
+ <div id="slash"></div><div id="flash"></div><div id="flashw"></div><div id="vig"></div><div id="grain"></div>
+</div>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const C=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),P=(t,a,b)=>C((t-a)/(b-a)),lerp=(a,b,k)=>a+(b-a)*k;
+const E={out3:x=>1-Math.pow(1-x,3),out5:x=>1-Math.pow(1-x,5),expo:x=>x>=1?1:1-Math.pow(2,-10*x),inout:x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2,in3:x=>x*x*x,in2:x=>x*x,back:x=>{const a=1.70158,b=a+1;return 1+b*Math.pow(x-1,3)+a*Math.pow(x-1,2)}};
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+const cam=$('#cam');let WORDS;
+function mk(parent,tag,cls,css,html){const e=document.createElement(tag);if(cls)e.className=cls;if(css)e.style.cssText=css;if(html!=null)e.innerHTML=html;parent.appendChild(e);return e}
+function tr(el,x=0,y=0,s=1,r=0,o=1){el.style.transform=`translate(${x}px,${y}px) rotate(${r}deg) scale(${s})`;el.style.opacity=o}
+function pop(el,t,t0,o={}){const d=o.d||.4,p=P(t,t0,t0+d),e=(o.ease||E.out5)(p);tr(el,(o.x||0)*(1-e),(o.y||0)*(1-e),lerp(o.s??1.35,1,e),(o.r||0)*(1-e),p>0?1:0);return p}
+const sh=(t,t0,amp=16,dur=.34)=>{const d=t-t0;if(d<0||d>dur)return[0,0];const k=Math.pow(1-d/dur,2)*amp;return[Math.sin(d*170+1)*k,Math.cos(d*143)*k*.7]};
+const rgOn=(t,hits,d=.14)=>hits.some(h=>t>=h&&t<h+d);
+function fit(el,w,max=9999){el.style.fontSize='100px';const k=el.offsetWidth;el.style.fontSize=Math.min(max,100*w/k)+'px'}
+function path(p,k){const L=p._L||(p._L=p.getTotalLength());p.style.strokeDasharray=L;p.style.strokeDashoffset=L*(1-k)}
+const MARK=`<g id="MT" clip-path="url(#ct)"><path d="M20 15 50 85 80 15H65L50 50 35 15Z"/><path d="M38 87h24v6H38z"/></g><g id="MB" clip-path="url(#cb)"><path d="M20 15 50 85 80 15H65L50 50 35 15Z"/><path d="M38 87h24v6H38z"/></g>`;
+const markSVG=(id,color)=>`<svg id="${id}" viewBox="0 0 100 100" width="100%" height="100%" fill="${color||'#8545ed'}" style="overflow:visible"><defs><clipPath id="ct${id}"><polygon points="0,0 100,0 100,30 0,70"/></clipPath><clipPath id="cb${id}"><polygon points="0,70 100,30 100,100 0,100"/></clipPath></defs><g class="mt" clip-path="url(#ct${id})"><path d="M20 15 50 85 80 15H65L50 50 35 15Z"/><path d="M38 87h24v6H38z"/></g><g class="mb" clip-path="url(#cb${id})"><path d="M20 15 50 85 80 15H65L50 50 35 15Z"/><path d="M38 87h24v6H38z"/></g></svg>`;
+function markSet(svg,d,col){const t=svg.querySelector('.mt'),b=svg.querySelector('.mb');t.setAttribute('transform',`translate(${-3-d} ${-3-d})`);b.setAttribute('transform',`translate(${3+d} ${3+d})`)}
+
+/* ================= DATA (vérifiée sur tvec.gg le 2026-10-26, cf. research/verified_data.json) ================= */
+const CONTESTS=[['semdemora',2000],['funkcalor',1500],['bailalento',1500],['montagemdauntless',1500],['africa',1000],['funkunico',1000],['tapatoma',1000]];
+const LADDER=[['Bronze III',0],['Bronze II',15],['Bronze I',30],['Silver III',50],['Silver II',75],['Silver I',100],['Gold III',130],['Gold II',165],['Gold I',200],['Platinum III',240],['Platinum II',285],['Platinum I',330],['Diamond III',380],['Diamond II',440],['Diamond I',500],['Ultimate',null]];
+const RCOL={Bronze:'#c8814a',Silver:'#c4cbd6',Gold:'#f2c14e',Platinum:'#7fe0f0',Diamond:'#7aa2ff',Ultimate:'#8545ed'};
+
+/* ================= SCÈNES ================= */
+const sc={};['a','b','b2','c1','c2','c3','d','e'].forEach(k=>sc[k]=mk(cam,'div','scene'));
+function bg(s,glow){mk(s,'div','dots');if(glow)mk(s,'div','a',`left:-200px;top:300px;width:1500px;height:1500px;background:radial-gradient(circle,rgba(133,69,237,${glow}),transparent 62%)`)}
+const el={}; // références
+
+function build(){
+/* ---- A : HOOK ---- */
+const A=sc.a;bg(A,.22);
+el.aArt=mk(A,'img','a','left:-60px;top:380px;width:1300px;mix-blend-mode:screen;opacity:0');el.aArt.src='../assets/chooser-print-mobile-v1-BtdJVLuR.webp';
+const vm=mk(A,'div','a','left:240px;top:440px;width:600px;height:600px');vm.innerHTML=markSVG('vA');el.vm=vm;
+el.aw=['COMPETE.','CREATE.','WIN.'].map((w,i)=>{const e=mk(A,'div','t'+(i==2?' v':''),`left:60px;top:${470+i*205}px;font-size:200px`,w);return e});
+el.aTag=mk(A,'div','tag','left:60px;top:392px','Your talent deserves to be paid');
+el.aSub=mk(A,'div','body','left:60px;top:1110px;width:900px;font-size:36px','The premium platform for paid edit contests connecting world-class editors and sponsors.');
+el.aBtn=mk(A,'div','btn cham','left:60px;top:1290px;width:520px;height:104px;font-size:34px;padding:0 34px','<span>Start Competing</span><span>→</span>');
+el.aBrk=[mk(A,'div','brk','left:40px;top:360px;border-left-width:3px;border-top-width:3px'),mk(A,'div','brk','right:40px;top:1420px;border-right-width:3px;border-bottom-width:3px')];
+el.aSl=mk(A,'div','a','left:700px;top:1200px;font-family:Suprapower;font-weight:900;font-size:110px;color:var(--v);font-style:italic;letter-spacing:-.05em','///');
+/* ---- B : UNIVERS (catégories) ---- */
+const B=sc.b;bg(B,.28);
+el.bTag=mk(B,'div','tag','left:60px;top:232px','TVEC / Choose your world');
+el.bShard=mk(B,'img','a','left:-100px;top:0;width:1700px;mix-blend-mode:screen;opacity:0');el.bShard.src='../assets/sponsor-print-texture-BoFBWYFY.webp';
+el.bPost=mk(B,'img','a','left:0;top:0;width:1080px;height:1920px;object-fit:cover;opacity:0;mix-blend-mode:screen');
+WORDS=['Music','Film / Series','Anime','Gaming','Creators','Community','Brand'];
+el.bw=WORDS.map((w,i)=>mk(B,'div','t c',`left:0;top:760px;width:1080px;text-align:center;font-size:200px;color:${i%2?'var(--w)':'var(--w)'}`,w));
+el.bEcho=mk(B,'div','t c','left:0;top:700px;width:1080px;text-align:center;color:transparent;-webkit-text-stroke:3px #8545ed;opacity:.0');
+el.bNum=mk(B,'div','t','left:60px;top:1450px;font-size:46px;color:var(--lil)','01 / 07');
+el.bBar=mk(B,'div','a','left:60px;top:1420px;width:960px;height:4px;background:#ffffff22');
+el.bFill=mk(B,'div','a','left:60px;top:1420px;width:960px;height:4px;background:var(--v);transform-origin:0 50%');
+/* ---- B2 : TUNNEL D'AFFICHES ---- */
+const B2=sc.b2;bg(B2,.3);
+el.tun=mk(B2,'div','a','left:0;top:0;width:1080px;height:1920px;perspective:1000px;perspective-origin:50% 46%');
+el.pc=CONTESTS.map(([k,pz],i)=>{const d=mk(el.tun,'div','a','left:260px;top:560px;width:560px;height:747px;transform-style:preserve-3d');const im=mk(d,'img','',`width:560px;height:747px;object-fit:cover;border-radius:6px;box-shadow:0 30px 80px rgba(0,0,0,.7)`);im.src=`../assets/poster_${k}.webp`;return d});
+el.b2Tag=mk(B2,'div','tag','left:60px;top:232px','Real contests. Real cashprizes');
+el.big=mk(B2,'div','t c','left:0;top:700px;width:1080px;text-align:center;font-size:300px','€9,500');
+el.bigSub=mk(B2,'div','t c','left:0;top:1010px;width:1080px;text-align:center;font-size:58px;color:var(--lil)','in prize pools');
+el.bigSub2=mk(B2,'div','body','left:0;top:1100px;width:1080px;text-align:center;font-size:34px','across 7 TVEC contests');
+/* ---- C1 : YOU EDIT. YOU POST. YOU CASH. ---- */
+const C1=sc.c1;bg(C1,.25);
+el.c1Tag=mk(C1,'div','tag','left:60px;top:232px','How it works / Three steps');
+el.c1w=['You edit.','You post.','You cash.'].map((w,i)=>mk(C1,'div','t'+(i==2?' v':''),`left:60px;top:${300+i*190}px;font-size:170px`,w));
+const edit=mk(C1,'div','a','left:60px;top:900px;width:960px;height:520px');el.edit=edit;
+edit.innerHTML=`<div class="card" style="left:0;top:0;width:960px;height:520px;overflow:hidden"><div style="position:absolute;left:24px;top:22px;display:flex;gap:10px"><i style="width:14px;height:14px;border-radius:50%;background:#444;display:block"></i><i style="width:14px;height:14px;border-radius:50%;background:#444;display:block"></i><i style="width:14px;height:14px;border-radius:50%;background:var(--v);display:block"></i></div>
+ <div style="position:absolute;left:24px;top:70px;width:320px;height:240px;border-radius:12px;overflow:hidden;background:#000"><img src="../assets/poster_semdemora.webp" style="width:320px;height:240px;object-fit:cover"></div>
+ <div id="eClips" style="position:absolute;left:24px;top:340px;width:912px;height:150px"></div><div id="ePh" style="position:absolute;left:24px;top:322px;width:4px;height:190px;background:var(--lil);box-shadow:0 0 18px var(--lil)"></div></div>`;
+const post=mk(C1,'div','a','left:300px;top:880px;width:480px;height:560px');el.post=post;
+post.innerHTML=`<div class="card" style="left:0;top:0;width:480px;height:560px;border-radius:44px;overflow:hidden;border:3px solid #ffffff55"><img src="../assets/poster_bailalento.webp" style="width:480px;height:560px;object-fit:cover"><div style="position:absolute;right:20px;bottom:70px;display:flex;flex-direction:column;gap:20px"><i style="display:block;width:46px;height:46px;border-radius:50%;background:#ffffffdd"></i><i style="display:block;width:46px;height:46px;border-radius:50%;background:#ffffffdd"></i><i style="display:block;width:46px;height:46px;border-radius:50%;background:#ffffffdd"></i></div></div><div class="pill" id="posted" style="left:110px;top:-30px;font-size:24px;padding:14px 26px;background:var(--v);color:#fff">✓ posted on your TikTok</div>`;
+const cash=mk(C1,'img','a','left:90px;top:960px;width:900px');el.cash=cash;cash.src='../assets/tvec-card-cutout-carousel-DVFa_FQL.webp';
+el.cashPill=mk(C1,'div','pill','left:60px;top:1420px;font-size:28px;padding:18px 34px;background:var(--w);color:#111','Paid out to your PayPal');
+/* ---- C2 : RANKED ---- */
+const C2=sc.c2;bg(C2,.3);
+el.c2Tag=mk(C2,'div','tag','left:60px;top:232px','Season 01 / Ranked mode');
+el.c2a=mk(C2,'div','t','left:60px;top:300px;font-size:150px','Climb the');
+el.c2b=mk(C2,'div','t v','left:60px;top:445px;font-size:150px','ladder.');
+el.lad=mk(C2,'div','a','left:0;top:640px;width:1080px;height:880px;overflow:hidden');
+el.ladIn=mk(el.lad,'div','a','left:0;top:0;width:1080px;height:2000px');
+LADDER.forEach(([n,tr_],i)=>{const base=n.split(' ')[0];const r=mk(el.ladIn,'div','rank',`top:${i*112}px`,`<div style="width:20px;height:20px;border-radius:5px;background:${RCOL[base]};transform:rotate(45deg);margin-right:34px;box-shadow:0 0 22px ${RCOL[base]}88"></div><div class="t" style="position:relative;font-size:52px;color:${RCOL[base]}">${n}</div><div style="margin-left:auto;font-weight:700;font-size:34px;letter-spacing:.08em;color:var(--g)">${tr_===null?'TOP 100':tr_+' TR'}</div>`);});
+el.ladHi=mk(el.lad,'div','a','left:40px;top:340px;width:940px;height:112px;border:3px solid var(--v);border-radius:6px;background:#8545ed22;box-shadow:0 0 40px #8545ed88');
+el.lad.style.webkitMaskImage='linear-gradient(transparent,#000 14%,#000 86%,transparent)';
+/* ---- C3 : STATS ---- */
+const C3=sc.c3;bg(C3,.3);
+el.c3Tag=mk(C3,'div','tag','left:60px;top:232px','It\'s already paying');
+el.c3a=mk(C3,'div','t','left:60px;top:300px;font-size:130px','Real editors.');
+el.c3b=mk(C3,'div','t v','left:60px;top:420px;font-size:130px','Real wins.');
+el.st=[['57M+','views across 7 contests',640],['715','edits submitted',930],['€9,500','in prize pools',1220]].map(([n,l,y])=>{const g=mk(C3,'div','a',`left:60px;top:${y}px;width:900px;height:250px;border-top:3px solid #ffffff33`);const a=mk(g,'div','t','left:0;top:30px;font-size:150px',n);const b=mk(g,'div','tag','left:4px;top:195px;font-size:26px',l);return{g,a,b,n}});
+el.c3foot=mk(C3,'div','body','left:60px;top:1500px;font-size:22px;letter-spacing:.06em;color:var(--dim)','FIGURES AS DISPLAYED ON TVEC.GG — OCT 26, 2026');
+/* ---- D : PROPOSITION ---- */
+const D=sc.d;bg(D,.28);
+el.dTag=mk(D,'div','tag','left:60px;top:232px','Why TVEC');
+el.dp=[];
+el.rw=['Compete.','Create.','Win.'].map((w,i)=>mk(D,'div','t c'+(i==2?' v':''),`left:0;top:760px;width:1080px;text-align:center;font-size:260px;display:none`,w));
+function dpanel(lines,sub,i){const g=mk(D,'div','a','left:0;top:0;width:1080px;height:1920px;opacity:0');lines.forEach((l,k)=>{const t=mk(g,'div','t'+(l[1]?' v':''),`left:60px;top:${360+k*220}px;font-size:200px`,l[0]);t.dataset.fit=l[2]||900});if(sub)mk(g,'div','body',`left:60px;top:${360+lines.length*220+40}px;width:900px`,sub);el.dp.push(g);return g}
+dpanel([['100% free.',1,940],['Unlimited',0,940],['entries.',0,700]],'Entry is free, with no subscription.');
+dpanel([['Talent,',0,760],['not audience',1,940],['size.',0,420]],'Winners are picked on talent and brief accuracy by a jury. Every contest publishes its own criteria.');
+dpanel([['Withdraw',0,900],['from €10.',1,820]],'Paid out to your PayPal. TVEC fee of 2% of the net amount sent, shown before you confirm.');
+dpanel([['Your TikTok.',0,940],['Your views.',1,900],['Your followers.',0,940]],'Every edit lives on YOUR TikTok account. The views and followers remain yours.');
+// éléments graphiques D
+el.mq=mk(D,'div','a','left:0;top:1215px;width:1080px;height:280px;overflow:hidden');
+el.mqIn=mk(el.mq,'div','a','left:0;top:0;height:280px;width:5000px');
+for(let r=0;r<2;r++)CONTESTS.forEach(([k],i)=>{const im=mk(el.mqIn,'img','a',`left:${(r*7+i)*236+60}px;top:6px;width:212px;height:282px;object-fit:cover;border-radius:6px;box-shadow:0 14px 30px rgba(0,0,0,.6)`);im.src=`../assets/poster_${k}.webp`});
+el.cardD=mk(D,'img','a','left:230px;top:1090px;width:620px');el.cardD.src='../assets/tvec-card-cutout-carousel-DVFa_FQL.webp';
+el.vstat=mk(D,'div','a','left:60px;top:1230px;width:900px;height:260px');
+el.vstat.innerHTML=`<div style="border-top:3px solid #ffffff33;padding-top:26px"><div class="t" id="vsn" style="position:relative;font-size:130px;color:var(--w)">0</div><div class="tag" style="position:relative;margin-top:18px;font-size:26px">views on a single contest — SEM DEMORA</div></div>`;
+el.jury=mk(D,'div','a','left:60px;top:1260px;width:900px;height:240px');
+el.jury.innerHTML=[['Creativity',60],['Execution',40]].map(([n,p],i)=>`<div style="position:absolute;left:0;top:${i*130}px;width:900px"><div style="font-weight:700;font-size:26px;letter-spacing:.18em;color:var(--lil);text-transform:uppercase;display:flex;justify-content:space-between"><span>${n}</span><span class="pct">${p}%</span></div><div style="margin-top:14px;height:34px;background:#ffffff14;border-radius:4px;overflow:hidden"><div class="jb" data-p="${p}" style="height:100%;width:0;background:var(--v)"></div></div></div>`).join('');
+el.juryNote=mk(D,'div','body','left:60px;top:1470px;font-size:22px;letter-spacing:.04em;color:var(--dim)','Judging criteria example: SEM DEMORA contest.');
+el.disc=mk(D,'div','body','left:60px;top:1510px;width:900px;font-size:22px;line-height:1.35;color:var(--dim)','Rewards depend on each contest\'s rules and are not guaranteed.');
+/* ---- E : FINALE ---- */
+const E_=sc.e;bg(E_,.35);
+el.eArt=mk(E_,'img','a','left:-100px;top:300px;width:1300px;mix-blend-mode:screen;opacity:0');el.eArt.src='../assets/hero-print-reference-1672-CFHPEM-L.webp';
+el.eV=mk(E_,'div','a','left:290px;top:330px;width:500px;height:500px');el.eV.innerHTML=markSVG('vE','#8545ed');
+el.eName=mk(E_,'div','t c','left:0;top:850px;width:1080px;text-align:center;font-size:84px','The Viral Edit');
+el.eName2=mk(E_,'div','t c','left:0;top:945px;width:1080px;text-align:center;font-size:84px;color:var(--v)','Contest');
+el.eSig=mk(E_,'div','tag','left:0;top:1090px;width:1080px;text-align:center;font-size:30px','Compete. Create. Win.');el.eSig.style.textAlign='center';
+el.eBtn=mk(E_,'div','btn cham','left:150px;top:1240px;width:780px;height:150px;font-size:56px;padding:0 50px;font-family:Suprapower;font-style:italic;font-weight:900;text-transform:uppercase;letter-spacing:-.01em;box-shadow:0 0 0 #8545ed','<span>tvec.gg</span><span>→</span>');
+el.sheen=mk(el.eBtn,'div','a','left:-200px;top:-20px;width:120px;height:200px;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg)');
+el.eRing=[0,1].map(i=>mk(E_,'div','a','left:240px;top:280px;width:600px;height:600px;border-radius:50%;border:4px solid var(--v);opacity:0'));
+el.eBtnTop=mk(E_,'div','tag','left:0;top:1185px;width:1080px;text-align:center;font-size:24px','Start competing — entry is free');
+el.eDisc=mk(E_,'div','body','left:150px;top:1430px;width:780px;font-size:21px;line-height:1.35;color:var(--dim)','Rewards depend on each contest\'s rules and are not guaranteed.');
+// éléments communs : logo header sur c1..d
+el.hdr=mk(cam,'div','a','left:0;top:0;width:1080px;height:230px;display:none;z-index:10');
+el.hdr.innerHTML=`<div style="position:absolute;left:60px;top:120px;width:48px;height:60px">${markSVG('vH')}</div><div class="t" style="left:124px;top:128px;font-size:30px;line-height:1">TVEC</div><div style="position:absolute;left:60px;top:196px;width:960px;height:2px;background:#ffffff33"></div>`;
+// clips de l'éditeur
+const ec=$('#eClips');const cols=['#8545ed','#b99cff','#5a2bc4','#8545ed','#b99cff','#8545ed'],posters=['semdemora','funkcalor','bailalento','montagemdauntless','africa','tapatoma'];
+[[0,200],[206,150],[362,260],[628,120],[754,158]].forEach(([x,w],i)=>mk(ec,'div','clip',`position:absolute;left:${x}px;top:0;width:${w}px;height:64px;border-radius:8px;background:${cols[i]};transform-origin:0 50%;overflow:hidden`,`<img src="../assets/poster_${posters[i]}.webp" style="width:${w}px;height:64px;object-fit:cover;opacity:.55">`));
+[[40,230],[290,190],[490,260],[760,150]].forEach(([x,w],i)=>mk(ec,'div','clip',`position:absolute;left:${x}px;top:80px;width:${w}px;height:50px;border-radius:8px;background:${cols[i+1]};opacity:.7;transform-origin:0 50%`));
+// fit
+Object.values(sc).forEach(s=>{s.style.display='block';s.style.visibility='hidden'});
+el.aw.forEach(w=>fit(w,940));const fs=Math.min(...el.aw.map(w=>parseFloat(w.style.fontSize)));el.aw.forEach((w,i)=>{w.style.fontSize=fs+'px';w.style.top=(520+i*fs*.98)+'px'});
+el.bw.forEach(w=>{w.style.width='auto';w.style.left='0';fit(w,900,300);w.style.width='1080px';w.style.left='0'});
+[el.big,el.bigSub].forEach((e,i)=>{e.style.width='auto';e.style.left='0';fit(e,i?820:940,i?70:9999);e.style.width='1080px';e.style.left='0'});
+el.c1w.forEach(w=>fit(w,900,190));
+$$('#cam [data-fit]').forEach(e=>{e.style.fontSize='100px';const k=e.offsetWidth;e.style.fontSize=(100*parseFloat(e.dataset.fit)/k)+'px'});
+el.st.forEach(s=>{s.a.style.fontSize='150px'});
+el.rw.forEach(w=>{w.style.display='block';w.style.width='auto';w.style.left='0';fit(w,940,330);w.style.width='1080px';w.style.display='none'});
+[el.c3a,el.c3b].forEach(e=>fit(e,900,150));
+Object.values(sc).forEach(s=>{s.style.display='none';s.style.visibility='visible'});
+el.btnTxt=1;
+}
+
+/* ================= TRANSITION « SLASH » ================= */
+function slash(t,t0,dir){const s=$('#slash'),d=.2,p=P(t,t0-d,t0+d);if(p<=0||p>=1){s.style.display='none';return}
+ s.style.display='block';const a=E.inout(P(t,t0-d,t0)),b=E.inout(P(t,t0,t0+d));
+ const x=a<1?lerp(-1900*dir,0,a):lerp(0,1900*dir,b);
+ s.style.background='linear-gradient(100deg,transparent 0 6%,#fff 6% 9%,var(--v) 9% 90%,#fff 90% 93%,transparent 93%)';
+ s.style.transform=`translateX(${x}px) skewX(-12deg)`}
+
+/* ================= SEEK ================= */
+const SW=[4.0,7.5,9.3+0,11.0,14.0,16.8,19.0,28.0]; // (b2 commence à 7.5)
+function which(t){return t<4?'a':t<7.5?'b':t<11?'b2':t<14?'c1':t<16.8?'c2':t<19?'c3':t<28?'d':'e'}
+function seek(t){
+  const w=which(t);Object.keys(sc).forEach(k=>sc[k].style.display=k===w?'block':'none');
+  el.hdr.style.display=(t>=11&&t<28)?'block':'none';
+  // caméra : impacts + dérive
+  const hits=[0,.5,1,1.5,4,7.5,9.5,11,12,13,16.8,19,21,23,25,28,30.25];let dx=0,dy=0;hits.forEach(h=>{const q=sh(t,h,h===28?26:13);dx+=q[0];dy+=q[1]});
+  cam.style.transform=`translate(${dx}px,${dy}px) scale(${1+.02*Math.sin(t*.4)})`;
+  $('#grain').style.transform=`translate(${(Math.sin(t*91)*40)|0}px,${(Math.cos(t*77)*40)|0}px)`;
+  // flashs
+  let f=0,fw=0;[[0,.3,.95],[1.5,.2,.9],[4,.16,.6],[11,.14,.5],[28,.22,.9]].forEach(([a,d,k])=>{const p=P(t,a,a+d);if(p>0&&p<1)f=Math.max(f,k*(1-p))});
+  [[.0,.06,.9],[28,.07,.8]].forEach(([a,d,k])=>{const p=P(t,a,a+d);if(p>0&&p<1)fw=Math.max(fw,k*(1-p))});
+  $('#flash').style.opacity=f;$('#flashw').style.opacity=fw;
+  ({a:SA,b:SB,b2:SB2,c1:SC1,c2:SC2,c3:SC3,d:SD,e:SE})[w](t);
+  const act=[[4,1],[11,-1],[19,1]].find(([a])=>Math.abs(t-a)<.2);
+  if(act)slash(t,act[0],act[1]);else $('#slash').style.display='none';
+}
+
+/* ---- A ---- */
+function SA(t){
+  const d=lerp(150,0,E.expo(P(t,0,.45)));
+  const svg=$('#vA');markSet(svg,d);
+  const big=t<.5?1:lerp(1,1.9,E.out3(P(t,.5,.9)));
+  tr(el.vm,lerp(0,230,E.out3(P(t,.5,1))),lerp(0,200,E.out3(P(t,.5,1))),big,0,t<.5?1:lerp(1,.22,E.out3(P(t,.5,.9))));
+  el.vm.style.opacity=t<.02?0:el.vm.style.opacity;
+  const hits=[.5,1,1.5];
+  el.aw.forEach((w,i)=>{const t0=hits[i];const p=pop(w,t,t0,{d:.3,s:1.7,x:-120});w.classList.toggle('rg',rgOn(t,[t0],.14))});
+  const tg=P(t,.9,1.2);el.aTag.style.opacity=E.out3(tg);el.aTag.style.transform=`translateY(${(1-E.out3(tg))*20}px)`;
+  pop(el.aSub,t,2.2,{d:.4,s:1,y:30});pop(el.aBtn,t,2.5,{d:.4,s:1,x:-80});
+  el.aSl.style.opacity=P(t,2.3,2.5);
+  const art=E.out3(P(t,1.6,2.8));el.aArt.style.opacity=art*.85;el.aArt.style.transform=`translate(${(1-art)*260}px,${lerp(0,-60,P(t,1.6,4))}px) scale(${lerp(1.05,1.18,P(t,1.6,4))})`;
+  el.aBrk.forEach(b=>b.style.opacity=P(t,1.2,1.5));
+  // sortie : tout glisse à gauche avant le slash (3.6–4)
+  const x=E.in3(P(t,3.55,3.95));sc.a.style.transform=`translateX(${-x*160}px) scale(${1+.045*P(t,.5,3.6)})`;sc.a.style.opacity=1-x*.5;
+}
+/* ---- B ---- */
+function SB(t){
+  const o=t-4,i=Math.min(6,Math.floor(o/.5));
+  pop(el.bTag,t,4.05,{d:.3,s:1,y:20});
+  el.bw.forEach((w,k)=>{const t0=4+k*.5;const p=P(t,t0,t0+.5);const on=p>0&&p<1;
+    w.style.display=on?'block':'none';if(on){const e=E.out5(P(t,t0,t0+.22));const sc_=lerp(1.5,1,e)+.05*P(t,t0+.22,t0+.5);
+      const x=(k%2?-1:1)*(1-e)*220;w.style.transform=`translateX(${x}px) scale(${sc_})`;w.style.opacity=P(t,t0+.45,t0+.5)>0?1-P(t,t0+.45,t0+.5):1;
+      w.classList.toggle('rg',rgOn(t,[t0],.12));w.style.color=k%2?'var(--w)':'var(--w)'}});
+  // fond : flash d'art violet + affiche pour MUSIC
+  const t0=4+i*.5,loc=P(t,t0,t0+.5);
+  el.bShard.style.opacity=.55*(1-E.out3(loc))*(i%2?1:.7)+.18;el.bShard.style.transform=`translate(${(i%3-1)*60}px,${(i%2?-1:1)*40+loc*50}px) scale(${1.05+loc*.12}) rotate(${(i%2?1:-1)*3}deg)`;
+  if(i===0){el.bPost.src='../assets/poster_semdemora.webp';el.bPost.style.opacity=.55*(1-loc)}else el.bPost.style.opacity=0;
+  el.bw[i]&&0;
+  {const wk=el.bw[i];el.bEcho.textContent=WORDS[i];el.bEcho.style.fontSize=(parseFloat(wk.style.fontSize)*1.9)+'px';el.bEcho.style.opacity=.38*(1-E.out3(loc));el.bEcho.style.transform=`translate(${(i%2?-1:1)*loc*140}px,${-60+loc*60}px) scale(${1+loc*.2})`}
+  el.bNum.textContent=String(i+1).padStart(2,'0')+' / 07';el.bFill.style.transform=`scaleX(${(i+loc)/7})`;
+  sc.b.style.opacity=1-E.in3(P(t,7.3,7.5))*.0;
+}
+/* ---- B2 : tunnel ---- */
+const TUN_ORDER=[6,5,4,3,2,1,0]; // tapatoma … semdemora (dernier = le concours en cours)
+const TUN_POS=[[-340,-120],[330,150],[-300,190],[340,-170],[-380,30],[320,-20],[0,0]];
+function SB2(t){
+  pop(el.b2Tag,t,7.6,{d:.3,s:1,y:20});
+  el.pc.forEach((d,n)=>{const i=TUN_ORDER.indexOf(n);const ti=7.95+i*.24;const speed=5200;
+    let zz=-(ti-t)*speed;const last=i===6;
+    if(last&&t>ti){zz=lerp(0,-260,E.out3(P(t,ti,ti+.5)))}
+    const [px,py]=TUN_POS[i];const wob=Math.sin(t*3+i)*10;
+    d.style.transform=`translate3d(${px+wob}px,${py}px,${zz}px) rotateY(${px*-.05}deg) rotateZ(${(i%2?1:-1)*(5-3*P(t,ti-.5,ti))}deg)`;
+    let op=zz<-5200?0:(zz<-3200?P(zz,-5200,-3200):1);if(!last&&zz>500)op=1-P(zz,500,1100);
+    d.style.opacity=op;
+    const dim=last?(t<9.5?1:lerp(1,.35,P(t,9.5,9.8))):1;
+    d.style.filter=`blur(${Math.max(0,(-zz-2600)/700)}px) brightness(${dim})`});
+  // €9,500 : impact sur le temps 9.5
+  const p=P(t,9.5,9.8);const cnt=p>=1?9500:E.out3(P(t,9.5,10.1))*9500;
+  el.big.textContent='€'+fmt(cnt);
+  tr(el.big,0,0,p>0?lerp(1.4,1,E.out5(P(t,9.5,9.75))):1,0,p>0?1:0);el.big.classList.toggle('rg',rgOn(t,[9.5],.14));
+  pop(el.bigSub,t,9.8,{d:.3,s:1,y:30});pop(el.bigSub2,t,10.0,{d:.3,s:1,y:20});
+  el.tun.style.top=(t>9.5?lerp(0,150,P(t,9.5,9.9)):0)+'px';
+}
+/* ---- C1 ---- */
+function SC1(t){
+  pop(el.c1Tag,t,11.1,{d:.3,s:1,y:20});
+  el.c1w.forEach((w,i)=>{const t0=11+i;const p=pop(w,t,t0,{d:.3,s:1.6,x:-100});w.classList.toggle('rg',rgOn(t,[t0],.12));
+    if(t>=t0+1&&i<2)w.style.opacity=.28});
+  // graphiques
+  const eP=P(t,11,11.3),poP=P(t,12,12.3),cP=P(t,13,13.3);
+  el.edit.style.opacity=t<11?0:(t<12?1:lerp(1,0,P(t,12,12.15)));tr(el.edit,0,(1-E.out5(eP))*80,1,0,el.edit.style.opacity);
+  $$('#eClips .clip').forEach((c,i)=>{const q=P(t,11.15+i*.08,11.4+i*.08);c.style.transform=`scaleX(${E.out5(q)})`});
+  $('#ePh').style.left=(24+P(t,11.1,12)*912)+'px';
+  el.post.style.opacity=t<12?0:(t<13?1:lerp(1,0,P(t,13,13.15)));tr(el.post,0,(1-E.out5(poP))*100,lerp(.9,1,E.out5(poP)),(1-E.out5(poP))*-4,el.post.style.opacity);
+  $('#posted').style.opacity=P(t,12.3,12.45);
+  el.cash.style.opacity=t<13?0:1;tr(el.cash,0,(1-E.out5(cP))*140,lerp(1.15,1,E.out5(cP)),lerp(-14,-6,E.out3(P(t,13,14))),el.cash.style.opacity);
+  pop(el.cashPill,t,13.35,{d:.3,s:1,y:30});
+  sc.c1.style.opacity=1-E.in3(P(t,13.8,14.0));
+}
+/* ---- C2 : ladder ---- */
+function SC2(t){
+  sc.c2.style.opacity=1;
+  pop(el.c2Tag,t,14.05,{d:.3,s:1,y:20});pop(el.c2a,t,14.0,{d:.35,s:1,x:-300});pop(el.c2b,t,14.12,{d:.35,s:1,x:300});
+  const step=C((t-14.5)/.14,0,15),stepE=Math.floor(step)+E.out3(step%1);const cur=t<14.5?0:(step>=15?15:stepE);
+  const idx=C(cur,0,15);el.ladIn.style.transform=`translateY(${340-idx*112}px)`;
+  el.lad.style.opacity=E.out3(P(t,14.1,14.4));
+  el.ladHi.style.borderColor=idx>=14.9?'#fff':'var(--v)';
+  const ult=P(t,16.65,16.8);
+}
+/* ---- C3 : stats ---- */
+function SC3(t){
+  pop(el.c3Tag,t,16.9,{d:.3,s:1,y:20});pop(el.c3a,t,16.85,{d:.3,s:1,x:-300});pop(el.c3b,t,17.0,{d:.3,s:1,x:300});
+  const T0=[17.3,17.9,18.4];
+  el.st.forEach((s,i)=>{const t0=T0[i];const p=P(t,t0,t0+.5);
+    s.g.style.opacity=p>0?1:0;s.g.style.transform=`translateY(${(1-E.out5(p))*60}px)`;
+    const q=P(t,t0+.1,t0+.5),k=q>=1?1:E.out3(q);
+    if(i===0)s.a.textContent=fmt(k*57)+'M+';else if(i===1)s.a.textContent=fmt(k*715);else s.a.textContent='€'+fmt(k*9500);
+    s.a.style.transform=`scale(${1+.06*Math.sin(P(t,t0+.5,t0+.7)*Math.PI)})`;s.a.classList.toggle('rg',rgOn(t,[t0+.5],.1));
+    s.a.style.color=i===0?'var(--w)':(i===1?'var(--w)':'var(--v)')});
+  el.c3foot.style.opacity=E.out3(P(t,18.6,18.9));
+}
+/* ---- D ---- */
+function SD(t){
+  const T=[[19,21],[21,23],[23,25],[25,26.95]];
+  pop(el.dTag,t,19.1,{d:.3,s:1,y:20});
+  el.dp.forEach((g,i)=>{const [a,b]=T[i];const on=t>=a&&t<b;g.style.opacity=on?1:0;if(on){const kids=[...g.children];kids.forEach((k,j)=>{if(k.classList.contains('t'))pop(k,t,a+.02+j*.12,{d:.32,s:1.45,x:-120});else{k.style.opacity=E.out3(P(t,a+.5,a+.8));}});
+      kids.filter(k=>k.classList.contains('t')).forEach((k,j)=>k.classList.toggle('rg',rgOn(t,[a+.02+j*.12],.12)));
+      const out=E.in3(P(t,b-.18,b));g.style.transform=`translateX(${-out*140}px)`;g.style.opacity=1-out}});
+  // jury bars (panel 2)
+  const jp=t>=21&&t<23;el.jury.style.display=jp?'block':'none';el.juryNote.style.display=jp?'block':'none';
+  if(jp){const q=E.out5(P(t,21.6,22.2));$$('.jb').forEach(b=>b.style.width=(q*parseFloat(b.dataset.p))+'%');$$('.pct').forEach(p=>p.style.opacity=q);el.jury.style.opacity=E.out3(P(t,21.5,21.8))*(1-E.in3(P(t,22.85,23)))}
+  {const m=t>=19&&t<21;el.mq.style.display=m?'block':'none';if(m){const q=E.out5(P(t,19.6,20.1));el.mq.style.opacity=q*(1-E.in3(P(t,20.82,21)));el.mq.style.transform=`translateY(${(1-q)*80}px)`;el.mqIn.style.transform=`translateX(${-(t-19.6)*300}px)`}
+   const c=t>=23&&t<25;el.cardD.style.display=c?'block':'none';if(c){const q=E.out5(P(t,23.55,24.05));tr(el.cardD,0,(1-q)*160+Math.sin(t*2.2)*8,lerp(1.15,1,q),lerp(-14,-8,q)+Math.sin(t*1.6)*1.2,q*(1-E.in3(P(t,24.82,25))))}
+   const v=t>=25&&t<27;el.vstat.style.display=v?'block':'none';if(v){const q=E.out3(P(t,25.7,26.5));$('#vsn').textContent=fmt(q*2422665);el.vstat.style.opacity=E.out3(P(t,25.5,25.75))*(1-E.in3(P(t,26.8,26.95)));el.vstat.style.transform=`translateY(${(1-E.out5(P(t,25.5,25.9)))*60}px)`}}
+  el.disc.style.opacity=t>=23&&t<26.9?E.out3(P(t,23.2,23.5)):0;
+  el.dTag.style.display=t<27?'block':'none';el.hdr.style.display=t<27?'block':'none';
+  el.rw.forEach((w,i)=>{const t0=27+i/3,on=t>=t0&&t<t0+.34;w.style.display=on?'block':'none';if(on){const e=E.out5(P(t,t0,t0+.14));w.style.transform=`scale(${lerp(1.5,1,e)})`;w.classList.toggle('rg',t<t0+.12)}});
+}
+/* ---- E ---- */
+function SE(t){
+  const o=t-28;
+  const art=E.out3(P(t,28,29.2));el.eArt.style.opacity=.42*art;el.eArt.style.transform=`translate(${(1-art)*-120+260}px,${lerp(260,200,P(t,28,34))}px) scale(${lerp(1.0,1.08,P(t,28,34))})`;
+  // V : pièces haut/bas se rejoignent
+  const d=lerp(170,0,E.expo(P(t,27.85,28.3)));markSet($('#vE'),d);
+  const s=lerp(2.2,1,E.out5(P(t,27.85,28.3)));tr(el.eV,0,lerp(60,0,E.out3(P(t,28.2,29))),s,0,t>=27.85?1:0);
+  pop(el.eName,t,28.4,{d:.35,s:1.3,x:-80});pop(el.eName2,t,28.55,{d:.35,s:1.3,x:80});
+  el.eName.classList.toggle('rg',rgOn(t,[28.4],.14));
+  el.eSig.style.opacity=E.out3(P(t,29.0,29.4));
+  const bp=P(t,30.0,30.35);tr(el.eBtn,0,(1-E.out5(bp))*120,lerp(.86,1,E.back(bp)),0,bp>0?1:0);
+  const glow=.5+.5*Math.sin((t-30.3)*4);el.eBtn.style.boxShadow=bp>=1?`0 0 ${40+30*glow}px ${6+6*glow}px rgba(133,69,237,.55)`:'none';
+  el.eBtnTop.style.opacity=E.out3(P(t,30.3,30.6));
+  el.sheen.style.transform=`translateX(${((t-30.4)%1.8)/1.8*1300}px) skewX(-20deg)`;el.sheen.style.opacity=t>30.4?1:0;
+  el.eRing.forEach((r,i)=>{const u=((t-28.05-i*.7)%2.2)/2.2;const on=t>28.05+i*.7&&u>=0;r.style.opacity=on?(1-u)*.7:0;r.style.transform=`scale(${.35+u*1.5})`});
+  el.eDisc.style.opacity=E.out3(P(t,30.8,31.2));
+}
+document.fonts.load("900 100px 'Suprapower'").then(()=>document.fonts.load("600 20px 'Inter'")).then(()=>document.fonts.ready).then(()=>{build();window.__ready=true;seek(0)});
+window.seek=seek;
+</script>
+</body>
+</html>
