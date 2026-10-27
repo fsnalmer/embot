@@ -37,3 +37,7 @@ Mettre à jour les chiffres : relancer `node render/crawl.cjs`, relire `research
 - **Pas de séquences vidéo d'edits** : le site ne fournit pas de vidéos téléchargeables, et les edits des participants (page Discover) appartiennent à leurs auteurs. La séquence « univers » est donc typographique + affiches officielles. Les 7 concours existants sont tous musicaux (Phonk) : les catégories Film/Anime/Gaming/etc. sont affichées comme catégories sponsors, sans fausses démos.
 - **Droits à confirmer avant publication** : police Suprapower (fournie par tvec.gg), affiches (artistes crédités sur les visuels), logo. La musique est originale (aucune piste tierce). Aucune voix off.
 - **Chiffres datés** : 57 144 522 vues, 715 inscriptions, 9 500 € de cashprizes (somme des 7 concours listés), 2 422 665 vues sur SEM DEMORA — relevés le 26/10/2026, ils évoluent.
+
+## Série de 6 shorts (à poster)
+`out/shorts/TVEC_{money,steps,ranked,faq,sponsors,spotlight}.mp4` (16–20 s chacun) — angles, captions, hashtags et calendrier dans `POSTING_KIT.md`.
+Moteur : `compositions/shorts.html?v=<nom>` (diapos pilotées en temps musicaux) · musique par vidéo : `audio/make_shorts_audio.py` · rendu + encodage : `bash render/make_shorts.sh [nom …]` · contrôle : `python3 render/qc_shorts.py <dossier_images>`.

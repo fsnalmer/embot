@@ -40,3 +40,18 @@ Non utilisés volontairement : pseudos et vidéos des participants, extraits de 
 - Musique : originale, synthétisée par code, aucune piste tierce.
 - Visuels : ressources servies publiquement par tvec.gg (`robots.txt` autorise l'exploration des pages utilisées). **À confirmer par TVEC** : usage vidéo de la police Suprapower, des affiches (artistes crédités sur les visuels) et du logo.
 - Aucun filigrane, élément de montage, texte coupé ou image déformée relevé sur les images inspectées.
+
+
+## Shorts (série de 6 vidéos) — contrôle qualité
+Mesuré par `render/qc_shorts.py` (résultats bruts : `research/qc_shorts.json`).
+
+| Vidéo | Durée | Format | Poids | Volume / crête | Images noires | Images dupliquées | Décalage son/image |
+|---|---|---|---|---|---|---|---|
+| money | 18.0 s | 1080x1920 @ 30 fps | 12.5 Mo | -12.4 LUFS / -0.9 dBFS | 0 | 0 | -2 img |
+| steps | 19.0 s | 1080x1920 @ 30 fps | 11.5 Mo | -13.9 LUFS / -1.0 dBFS | 0 | 0 | -2 img |
+| ranked | 16.9 s | 1080x1920 @ 30 fps | 11.0 Mo | -12.1 LUFS / -1.0 dBFS | 0 | 0 | -2 img |
+| faq | 20.4 s | 1080x1920 @ 30 fps | 10.5 Mo | -14.8 LUFS / -0.9 dBFS | 0 | 0 | -3 img |
+| sponsors | 20.4 s | 1080x1920 @ 30 fps | 12.7 Mo | -13.8 LUFS / -1.0 dBFS | 0 | 0 | -2 img |
+| spotlight | 16.6 s | 1080x1920 @ 30 fps | 11.9 Mo | -13.1 LUFS / -1.3 dBFS | 0 | 0 | -2 img |
+
+Tous : H.264 High yuv420p, AAC-LC stéréo 44,1 kHz, décodage complet sans erreur. Le détecteur signale une séquence « figée » d'au plus 1,5 s sur 5 vidéos : c'est l'écran final volontairement tenu (halos et reflet du bouton restent animés). Inspection visuelle : planches à 1,25 image/s des 6 vidéos + captures plein format aux instants critiques ; compteurs vérifiés sur leurs valeurs finales (79 inscriptions, 2 422 665 vues, 715, 9 500 €). Limite : pas de visionnage humain à vitesse normale ; un passage sur téléphone avant publication est recommandé.
